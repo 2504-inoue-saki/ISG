@@ -2,29 +2,40 @@ package com.example.ISG.repository.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.LastModifiedDate;
+import lombok.*;
 
 import java.util.Date;
 
 @Entity
-@Table(name = "User")
+@Table(name = "comment")
 @Getter
 @Setter
 public class User {
-@id
-private Integer id;
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-@Column
+    @Column
     private String account;
+    @Column
     private String password;
+    @Column
     private String name;
-    private Integer branchId;
-    private String account;
-    private String account;
-    private String account;
-
+    @Column
+    private int branchId;
+    @Column
+    private int departmentId;
+    @Column
+    private int isStoppedId;
+    @Column
+    private Date createdDate;
+    @Column
+    private Date updatedDate;
+    @Column
+    private String errorMessage;
 }
