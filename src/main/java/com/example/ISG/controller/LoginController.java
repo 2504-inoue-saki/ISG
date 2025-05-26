@@ -3,8 +3,10 @@ package com.example.ISG.controller;
 import com.example.ISG.controller.form.UserForm;
 import com.example.ISG.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,6 +21,8 @@ public class LoginController {
     HttpSession session;
 
     // エラーメッセージ
+    private static final String E0001 = "アカウントを入力してください";
+    private static final String E0002 = "パスワードを入力してください";
     private static final String E0003 = "ログインに失敗しました";
 
     /*
@@ -26,10 +30,11 @@ public class LoginController {
      */
     @PostMapping("/login")
     //リクエストパラメータの取得
-    public ModelAndView newContent(@ModelAttribute("loginUser") UserForm loginUser) {
-        //リクエストパラメータの有無チェック
+    public ModelAndView newContent(@Valid @ModelAttribute("loginUser") UserForm loginUser, BindingResult result) {
+        //リクエストパラメータの入力チェック
 
-        // 入力された情報がDBにあるか確認しにいく
+
+        // 入力されたアカウントとパスワードが存在するか確認しに行く
         UserForm loginData = userService.findLoginUser(loginUser);
 
         //アカウントが無い場合またはユーザーが停止している場合はエラーメッセージを今の画面に表示
@@ -40,7 +45,7 @@ public class LoginController {
         }
 
         //無事にアカウントがあった場合はログイン情報を保持＆ホーム画面へリダイレクト
-
+        session.setAttribute("loginUsers", loginData);
         return new ModelAndView("redirect:/");
     }
 }
