@@ -36,6 +36,4 @@ public class User {
     private Date createdDate;
     @Column
     private Date updatedDate;
-    @Column
-    private String errorMessage;
 }
