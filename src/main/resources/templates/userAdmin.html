@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="styleSheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script th:src="@{/js/updateIsStopped.js}"></script>
+    <title>ユーザ管理</title>
+</head>
+<body>
+<div class="header-contents">
+    <h1>ユーザ管理</h1>
+    <a th:href="@{/signup}">
+        <button class="signup-button header-button" type="button">ユーザ登録</button>
+    </a>
+</div>
+<div class="main-contents">
+    <div class="errorMessages" th:each="errorMessage : ${errorMessages}">
+        <span th:text="${errorMessage}"></span>
+    </div>
+    <table style="border-collapse: collapse">
+        <tr>
+            <th class="table-account">アカウント名</th>
+            <th class="table-name">氏名</th>
+            <th class="table-isStopped">ユーザ停止状態</th>
+            <th class="table-branch-name">支社名</th>
+            <th class="table-department-name">部署名</th>
+            <th class="table-edit">編集</th>
+        </tr>
+        <tr class="user-icon" th:each="user : ${users}">
+            <td class="table-account" th:text="${user.account}"></td>
+            <td class="table-name" th:text="${user.name}"></td>
+            <td class="table-isStopped">
+                <div class="update-isStopped">
+                    <div th:if="${user.id} == ${loginUserId}">
+                        <span th:if="${user.isStopped} == 0">稼働</span>
+                        <span th:if="${user.isStopped} == 1">停止</span>
+                    </div>
+                    <div th:if="${user.id} != ${loginUserId}">
+                        <form th:action="@{/update-isStopped/{id}(id=${user.id})}" th:method="put">
+                            <select class="select-box" name="isStopped">
+                                <option value="0" th:selected="${user.isStopped == 0}">稼働</option>
+                                <option value="1" th:selected="${user.isStopped == 1}">停止</option>
+                            </select>
+                            <input name="userName" th:value="${user.name}" type="hidden">
+                            <input class="update-isStopped-button" type="submit" value="変更">
+                        </form>
+                    </div>
+                </div>
+            </td>
+            <td class="table-branch-name" th:text="${user.branchName}"></td>
+            <td class="table-department-name" th:text="${user.departmentName}"></td>
+            <td class="table-edit edit-button">
+                <a th:href="@{/user/edit/{id}(id=${user.id})}">
+                    <input type="button" value="編集">
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="footer-contents">
+    <a th:href="@{/}">ホーム</a>
+</div>
+</body>
+</html>
