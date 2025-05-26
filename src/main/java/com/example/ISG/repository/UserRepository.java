@@ -11,6 +11,10 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+    /*
+     * ログイン画面処理（鈴木）
+     */
+    public List<User>  findByAccountAndPassword(String account, String password);
 
     // ユーザを全件取得
     @Query("SELECT u.id, u.account, u.name, u.branchId, u.departmentId, u.isStopped, b.name, d.name FROM User u " +
@@ -22,4 +26,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Query("UPDATE User u SET u.isStopped = :isStopped, u.updatedDate = CURRENT_TIMESTAMP WHERE u.id = :id")
     public void saveStatus(@Param("isStopped")short isStopped, @Param("id")Integer id);
+
 }
