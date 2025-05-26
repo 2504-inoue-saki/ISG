@@ -7,11 +7,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
-
-import java.util.Date;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "comment")
+@Table(name = "branches")
 @Getter
 @Setter
 public class Branch {
@@ -22,10 +23,15 @@ public class Branch {
 
     @Column
     private String name;
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
     @Column
-    private Date createdDate;
-    @Column
-    private Date updatedDate;
+    private LocalDateTime updatedDate;
+
     @Column
     private String errorMessage;
 }
