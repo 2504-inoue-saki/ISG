@@ -1,7 +1,7 @@
 package com.example.ISG.controller.form;
 
 import lombok.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -9,7 +9,7 @@ import java.util.Date;
 public class BranchForm {
     private int id;
     private String name;
-    private Date createdDate;
-    private Date updatedDate;
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
     private String errorMessage;
 }

@@ -7,11 +7,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
-
-import java.util.Date;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "comment")
+@Table(name = "users")
 @Getter
 @Setter
 public class User {
@@ -22,18 +23,30 @@ public class User {
 
     @Column
     private String account;
+
     @Column
     private String password;
+
     @Column
     private String name;
+
     @Column
     private int branchId;
+
     @Column
     private int departmentId;
+
     @Column
-    private int isStoppedId;
+    private int isStopped;
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
     @Column
-    private Date createdDate;
+    private LocalDateTime updatedDate;
+
     @Column
-    private Date updatedDate;
+    private String errorMessage;
 }
