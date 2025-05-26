@@ -6,7 +6,7 @@
 //import org.springframework.web.servlet.ModelAndView;
 //
 //@Controller
-//public class ISGController {
+//public class LoginController {
 //
 //    /*
 //     * ログイン画面表示（鈴木）
@@ -14,7 +14,7 @@
 //    @PostMapping("/login")
 //    public ModelAndView newContent(@ModelAttribute("loginUser") UserForm loginUser) {
 //        // 入力された情報がDBにあるか確認しにいく
-////        List<UserForm> loginData = ??Service.findLoginUser(loginUser);
+////        List<UserForm> loginData = UserService.findLoginUser(loginUser);
 //
 //
 //
