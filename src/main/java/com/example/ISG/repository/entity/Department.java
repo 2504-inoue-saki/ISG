@@ -14,19 +14,13 @@ import java.util.Date;
 @Table(name = "comment")
 @Getter
 @Setter
-public class Message {
+public class Department {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
-    private String title;
-    @Column
-    private String text;
-    @Column
-    private String category;
-    @Column
-    private int userId;
+    private String name;
     @Column
     private Date createdDate;
     @Column
