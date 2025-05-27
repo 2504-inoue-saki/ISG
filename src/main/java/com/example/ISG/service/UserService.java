@@ -92,17 +92,17 @@ public class UserService {
         return user;
     }
 
-    /*
-     * レコード1件取得
-     */
-    public UserForm editUser(int id) {
-        List<User> results = new ArrayList<>();
-        results.add(userRepository.findById(id).orElse(null));
-        if(results.get(0) != null){
-            List<UserForm> users = setUserForm(results);
-            return users.get(0);
-        }else{
-            return null;
-        }
-    }
+//    /*
+//     * レコード1件取得
+//     */
+//    public UserForm editUser(int id) {
+//        List<User> results = new ArrayList<>();
+//        results.add(userRepository.findById(id).orElse(null));
+//        if(results.get(0) != null){
+//            List<UserForm> users = setUserForm(results);
+//            return users.get(0);
+//        }else{
+//            return null;
+//        }
+//    }
 }

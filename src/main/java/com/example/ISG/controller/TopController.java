@@ -57,7 +57,7 @@ public class TopController {
      */
     @GetMapping({"/user/edit/", "/user/edit/{id}"})
     public ModelAndView editUser(@PathVariable(required = false) String id,
-//                               @AuthenticationPrincipal LoginUserDetails loginUser,
+                                 @AuthenticationPrincipal LoginUserDetails loginUser,
                                  RedirectAttributes redirectAttributes,
                                  HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
@@ -98,17 +98,17 @@ public class TopController {
     @PostMapping("/comment")
     public ModelAndView addComment(@Validated @ModelAttribute("commentform") CommentForm commentForm, BindingResult result , MessageForm message
     ) throws ParseException {
-//        if(result.hasErrors()) {
-//            ModelAndView mav = new ModelAndView();
-//            mav.setViewName("redirect:/");
-//            ErrorMessageForm errorMessage = new ErrorMessageForm();
-//            errorMessage.setReportId(commentForm.getReportId());
-//            for (ObjectError error : result.getAllErrors()) {
-//                errorMessage.setErrorMessage(error.getDefaultMessage());
-//            }
-//            session.setAttribute("errorMessage", errorMessage);
-//            return mav;
-//        }
+        if(result.hasErrors()) {
+            ModelAndView mav = new ModelAndView();
+            mav.setViewName("redirect:/");
+            ErrorMessageForm errorMessage = new ErrorMessageForm();
+            errorMessage.setReportId(commentForm.getReportId());
+            for (ObjectError error : result.getAllErrors()) {
+                errorMessage.setErrorMessage(error.getDefaultMessage());
+            }
+            session.setAttribute("errorMessage", errorMessage);
+            return mav;
+        }
         // 返信をテーブルに格納
         commentService.saveComment(commentForm);
 //        レポートIDに対応した投稿を取得//

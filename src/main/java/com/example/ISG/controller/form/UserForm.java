@@ -16,6 +16,8 @@ public class UserForm {
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
     private String errorMessage;
-
+    //下記鈴木追加
     private String checkPassword;
+    private String stringBranchId;
+    private String stringDepartmentId;
 }
