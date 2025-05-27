@@ -29,7 +29,6 @@ public class UserAddController {
      * ユーザー登録画面表示（鈴木）
      */
     @GetMapping("/userAdd")
-    //リクエストパラメータの取得
     public ModelAndView userAddContent() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/login");
@@ -41,32 +40,22 @@ public class UserAddController {
      */
     @PostMapping("/userAddProcess")
     //リクエストパラメータの取得
-    public ModelAndView userAddProcessContent(@Valid @ModelAttribute("loginUser") UserForm requestLogin, BindingResult result) {
+    public ModelAndView userAddProcessContent(@Valid @ModelAttribute("loginUser") UserForm addUser, BindingResult result) {
         ModelAndView mav = new ModelAndView();
+//        //チェック系
+//        if(result.hasErrors()){
+//            //エラーメッセージをセット
+//            mav.addObject("errorMessage", E0001);
+//            // 画面遷移先を指定
+//            mav.setViewName("/login");
+//            return mav;
+//        }
 
-        //リクエストパラメータの入力チェック
-        if(result.hasErrors()){
-            //エラーメッセージをセット
-            mav.addObject("errorMessage", E0001);
-            // 画面遷移先を指定
-            mav.setViewName("/login");
-            return mav;
-        }
 
-        // 入力されたアカウントとパスワードが存在するか確認しに行く
-        UserForm loginUser = userService.findLoginUser(requestLogin);
 
-        //アカウントが無い場合またはユーザーが停止している場合はエラーメッセージを今の画面に表示
-        if(loginUser == null || loginUser.getIsStoppedId() == 1){
-            //エラーメッセージをセット
-            mav.addObject("errorMessage",E0003);
-            // 画面遷移先を指定
-            mav.setViewName("/login");
-            return mav;
-        }
-
-        //無事にアカウントがあった場合はログイン情報を保持＆ホーム画面へリダイレクト
-        session.setAttribute("loginUser", loginUser);
+        //入力された情報を登録しに行く
+        userService.addUser(addUser);
+        //ユーザー管理画面へリダイレクト
         return new ModelAndView("redirect:/");
     }
 }

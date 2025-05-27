@@ -16,4 +16,6 @@ public class UserForm {
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
     private String errorMessage;
+
+    private String checkPassword;
 }

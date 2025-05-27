@@ -137,16 +137,22 @@ label {
 </head>
 <body>
 <div class="main-contents">
-
         <div class="form-area">
             <form action="./" method="get">
                 <!--  日付・カテゴリーの値の保持-->
                 日付：<input type="date" name="start" th:value="${start}">～<input type="date" name="end" th:value="${end}">
-                <label for="category">カテゴリ：</label>
+                <label for="category">カテゴリー：</label>
                 <input type="text" id = "category" name="category" placeholder="カテゴリ名を入力">
                 <input type="submit" value="絞込">
             </form>
         </div>
+
+<!--    エラー表示-->
+    <div class="message-icon" th:each="message : ${errorMessage}" style="color: red">
+        エラー
+        <div th:text="${message.errorMessage}">
+        </div>
+    </div>
 
     <div class="form-area">
         <div class="message-icon" th:each="message : ${contents}">
@@ -155,20 +161,13 @@ label {
                     <span class="account" th:text="${message.name}">ユーザー名</span>
                     <span class="name" th:text="'@' + ${message.account}">@account</span>
                 </div>
+                <label for="MessageCategory">カテゴリー:</label><span class="text" id="MessageCategory" th:text="${message.category}"></span>
                 <div class="text" th:text="${message.text}">投稿内容</div>
                 <div class="date" th:text="${#temporals.format(message.createdDate, 'yyyy/MM/dd HH:mm')}">2024/01/01 12:00</div>
                 <!--                    コメント機能-->
                 <div class="comment-contents">
-                    <form method="#" action="#">
+                    <form method="/comment" action="post">
                         <div class="form-area">
-<!--                            <div class="message-icon" th:each="error : ${errorMessage}">-->
-<!--                                <div th:if="${error.reportId == content.id}">-->
-<!--                                    <div class="message-icon" th:each="message : ${errorMessage}" style="color: red">-->
-<!--                                        <div th:text="${message.errorMessage}">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
                             <label>返信内容</label>
                             <textarea class="tweet-box" name="commentText" maxlength="200"></textarea><br/>
 <!--                            メッセージのIDをコメントfoamのメッセージIDに格納してます-->
@@ -176,7 +175,6 @@ label {
                             <input type="submit" value="送信"/>
                         </div>
                     </form>
-<!--                    コメントfoamのmessageIdとメッセージのidが一緒なら表示するようにしています-->
                     <div class="message-icon" th:each="comment : ${comments}" th:if="${comment.messageId == message.id}">
                         <div class="text">
                             返信 : <span th:text="${comment.commentContent}"></span>
@@ -189,15 +187,19 @@ label {
                     </div>
                 </div>
             </div>
+            <div class="delete-button">
+<!--                                                                                ログインユーザーとメッセージIDが一致していたら表示する-->
+                <form th:action="@{/delete/{id}(id=${message.id})}" th:method="delete" th:if="${message.userId == message.userId}">
+                    <input type="submit" value="削除">
+                </form>
+            </div>
         </div>
     </div>
 
     <!-- 総務人事部用のボタン -->
-    <div th:if="${buttonFlag == 'ON'}">
         <form action="/someSpecialAction" method="post">
             <button type="submit">特別な機能（総務人事部のみ）</button>
         </form>
-    </div>
 
     <div class="copyright">
         <p>© ISG System</p>
