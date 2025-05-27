@@ -76,4 +76,8 @@ public class CommentService {
 //        createdDateとupdatedDateはDBで勝手に追加される
         return comment;
     }
+
+    public void deleteComment(Integer id) {
+        commentRepository.deleteById(id);
+    }
 }
