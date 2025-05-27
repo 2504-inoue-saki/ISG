@@ -94,5 +94,12 @@ public class MessageService {
         }
         return Messages;
     }
+
+    /*
+     * メッセージ削除
+     */
+    public void deleteMessage(Integer id) {
+        messageRepository.deleteById(id);
+    }
 }
 

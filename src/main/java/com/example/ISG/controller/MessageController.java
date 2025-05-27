@@ -1,5 +1,6 @@
 package com.example.ISG.controller;
 
+import com.example.ISG.constfolder.ErrorMessage;
 import com.example.ISG.controller.form.MessageForm;
 import com.example.ISG.controller.form.UserForm;
 import com.example.ISG.service.MessageService;
@@ -47,10 +48,10 @@ public class MessageController {
     public ModelAndView addContent(@Valid @ModelAttribute("message") MessageForm messageForm, BindingResult result) {
         ModelAndView mav = new ModelAndView();
 
-//        //リクエストパラメータの入力チェック
+        //リクエストパラメータの入力チェック
 //        if(result.hasErrors()){
 //            //エラーメッセージをセット
-//            mav.addObject("errorMessage", E0001);
+//            mav.addObject("errorMessage", ErrorMessage.E0001);
 //            // 画面遷移先を指定
 //            mav.setViewName("/login");
 //            return mav;
@@ -72,5 +73,14 @@ public class MessageController {
         return new ModelAndView("redirect:/");
     }
 
-
+    /*
+     * 投稿削除処理
+     */
+    @DeleteMapping("/delete/{id}")
+    public ModelAndView deleteContent(@PathVariable Integer id) {
+        // 投稿をテーブルに格納
+        messageService.deleteMessage(id);
+        // rootへリダイレクト
+        return new ModelAndView("redirect:/");
+    }
 }

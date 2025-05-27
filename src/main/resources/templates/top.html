@@ -159,7 +159,7 @@ label {
                 <div class="date" th:text="${#temporals.format(message.createdDate, 'yyyy/MM/dd HH:mm')}">2024/01/01 12:00</div>
                 <!--                    コメント機能-->
                 <div class="comment-contents">
-                    <form method="#" action="#">
+                    <form method="/comment" action="post">
                         <div class="form-area">
 <!--                            <div class="message-icon" th:each="error : ${errorMessage}">-->
 <!--                                <div th:if="${error.reportId == content.id}">-->
@@ -176,7 +176,6 @@ label {
                             <input type="submit" value="送信"/>
                         </div>
                     </form>
-<!--                    コメントfoamのmessageIdとメッセージのidが一緒なら表示するようにしています-->
                     <div class="message-icon" th:each="comment : ${comments}" th:if="${comment.messageId == message.id}">
                         <div class="text">
                             返信 : <span th:text="${comment.commentContent}"></span>
@@ -189,15 +188,19 @@ label {
                     </div>
                 </div>
             </div>
+            <div class="delete-button">
+<!--                                                                                ログインユーザーとメッセージIDが一致していたら表示する-->
+                <form th:action="@{/delete/{id}(id=${message.id})}" th:method="delete" th:if="${message.userId == message.userId}">
+                    <input type="submit" value="削除">
+                </form>
+            </div>
         </div>
     </div>
 
     <!-- 総務人事部用のボタン -->
-    <div th:if="${buttonFlag == 'ON'}">
         <form action="/someSpecialAction" method="post">
             <button type="submit">特別な機能（総務人事部のみ）</button>
         </form>
-    </div>
 
     <div class="copyright">
         <p>© ISG System</p>
