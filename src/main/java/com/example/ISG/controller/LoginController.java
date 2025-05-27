@@ -33,7 +33,7 @@ public class LoginController {
         UserForm loginData = userService.findLoginUser(loginUser);
 
         //アカウントが無い場合またはユーザーが停止している場合はエラーメッセージを今の画面に表示
-        if(loginData == null || loginData.getIsStoppedId() == 1){
+        if(loginData == null || loginData.getIsStopped() == 1){
             ModelAndView mav = new ModelAndView();
             mav.addObject("errorMessage",E0003);
             return mav;

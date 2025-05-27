@@ -36,7 +36,7 @@ public class UserService {
         saveUserForm.setName(result.getName());
         saveUserForm.setBranchId(result.getBranchId());
         saveUserForm.setDepartmentId(result.getDepartmentId());
-        saveUserForm.setIsStoppedId(result.getIsStoppedId());
+        saveUserForm.setIsStopped(result.getIsStopped());
         saveUserForm.setCreatedDate(result.getCreatedDate());
         saveUserForm.setUpdatedDate(result.getUpdatedDate());
         return saveUserForm;
@@ -87,28 +87,5 @@ public class UserService {
         }else{
             return null;
         }
-    }
-
-    /*
-     * DBから取得したデータをFormに設定
-     */
-    private List<UserForm> setUserForm(List<User> results) {
-        List<UserForm> users = new ArrayList<>();
-
-        for (int i = 0; i < results.size(); i++) {
-            UserForm user = new UserForm();
-            User result = results.get(i);
-            user.setId(result.getId());
-            user.setAccount(result.getAccount());
-            user.setPassword(result.getPassword());
-            user.setName(result.getName());
-            user.setBranchId(result.getBranchId());
-            user.setDepartmentId(result.getDepartmentId());
-            user.setIsStopped(result.getIsStopped());
-            user.setCreatedDate(result.getCreatedDate());
-            user.setUpdatedDate(result.getUpdatedDate());
-            users.add(user);
-        }
-        return users;
     }
 }
