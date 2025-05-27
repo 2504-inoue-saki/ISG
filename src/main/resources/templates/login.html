@@ -3,23 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <link th:href="@{/css/style.css}" rel="styleSheet">
-  <title>LOGIN</title>
+  <title>ログイン</title>
 </head>
 <body>
-  <div class="header-contents">
+<div class="header-contents">
   <h1>ログイン画面</h1>
-  </div>
+</div>
+<div class="errorMessage" th:if="${errorMessage != null}">
+  <span th:text="${errorMessage}"></span>
+</div>
+<div class="main-contents">
+  <form th:action="@{/loginProcess}" method="post" th:object="${loginUser}">
+    アカウント
+    <input type="text" th:field="*{account}"/> <br />
+    パスワード
+    <input type="password" th:field="*{password}"/> <br />
 
-  <div class="main-contents">
-    <form th:action="@{/login}" method="post" th:object="${loginUser}">
-      アカウント
-      <input type="text" th:field="*{account}"/> <br />
-
-      パスワード
-      <input type="password" th:field="*{password}"/> <br />
-
-      <input type="submit" value="ログイン">
-    </form>
-  </div>
+    <input type="submit" value="ログイン">
+  </form>
+</div>
 </body>
 </html>

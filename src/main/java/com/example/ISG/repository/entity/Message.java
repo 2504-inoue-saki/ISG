@@ -31,6 +31,4 @@ public class Message {
     private Date createdDate;
     @Column
     private Date updatedDate;
-    @Column
-    private String errorMessage;
 }

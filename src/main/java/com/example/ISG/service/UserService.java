@@ -17,7 +17,7 @@ public class UserService {
     UserRepository userRepository;
 
     /*
-     * ログイン画面処理（鈴木）
+     * ログイン処理（鈴木）
      */
     public UserForm findLoginUser(UserForm loginUser) {
         // パスワード暗号化

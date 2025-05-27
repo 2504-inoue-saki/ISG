@@ -26,26 +26,47 @@ public class LoginController {
     private static final String E0003 = "ログインに失敗しました";
 
     /*
-     * ログイン画面処理（鈴木）
+     * ログイン画面表示（鈴木）
      */
-    @PostMapping("/login")
+    @GetMapping("/login")
     //リクエストパラメータの取得
-    public ModelAndView newContent(@Valid @ModelAttribute("loginUser") UserForm loginUser, BindingResult result) {
-        //リクエストパラメータの入力チェック
+    public ModelAndView loginContent() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/login");
+        return mav;
+    }
 
+    /*
+     * ログイン処理（鈴木）
+     */
+    @PostMapping("/loginProcess")
+    //リクエストパラメータの取得
+    public ModelAndView loginContent(@Valid @ModelAttribute("loginUser") UserForm requestLogin, BindingResult result) {
+        ModelAndView mav = new ModelAndView();
+
+        //リクエストパラメータの入力チェック
+        if(result.hasErrors()){
+            //エラーメッセージをセット
+            mav.addObject("errorMessage", E0001);
+            // 画面遷移先を指定
+            mav.setViewName("/login");
+            return mav;
+        }
 
         // 入力されたアカウントとパスワードが存在するか確認しに行く
-        UserForm loginData = userService.findLoginUser(loginUser);
+        UserForm loginUser = userService.findLoginUser(requestLogin);
 
         //アカウントが無い場合またはユーザーが停止している場合はエラーメッセージを今の画面に表示
-        if(loginData == null || loginData.getIsStoppedId() == 1){
-            ModelAndView mav = new ModelAndView();
+        if(loginUser == null || loginUser.getIsStoppedId() == 1){
+            //エラーメッセージをセット
             mav.addObject("errorMessage",E0003);
+            // 画面遷移先を指定
+            mav.setViewName("/login");
             return mav;
         }
 
         //無事にアカウントがあった場合はログイン情報を保持＆ホーム画面へリダイレクト
-        session.setAttribute("loginUsers", loginData);
+        session.setAttribute("loginUser", loginUser);
         return new ModelAndView("redirect:/");
     }
 }
