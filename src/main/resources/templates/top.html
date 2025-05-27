@@ -157,6 +157,37 @@ label {
                 </div>
                 <div class="text" th:text="${message.text}">投稿内容</div>
                 <div class="date" th:text="${#temporals.format(message.createdDate, 'yyyy/MM/dd HH:mm')}">2024/01/01 12:00</div>
+                <!--                    コメント機能-->
+                <div class="comment-contents">
+                    <form method="#" action="#">
+                        <div class="form-area">
+<!--                            <div class="message-icon" th:each="error : ${errorMessage}">-->
+<!--                                <div th:if="${error.reportId == content.id}">-->
+<!--                                    <div class="message-icon" th:each="message : ${errorMessage}" style="color: red">-->
+<!--                                        <div th:text="${message.errorMessage}">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                            <label>返信内容</label>
+                            <textarea class="tweet-box" name="commentText" maxlength="200"></textarea><br/>
+<!--                            メッセージのIDをコメントfoamのメッセージIDに格納してます-->
+                            <input type="hidden" th:value="${message.id}" name="messageId"/>
+                            <input type="submit" value="送信"/>
+                        </div>
+                    </form>
+<!--                    コメントfoamのmessageIdとメッセージのidが一緒なら表示するようにしています-->
+                    <div class="message-icon" th:each="comment : ${comments}" th:if="${comment.messageId == message.id}">
+                        <div class="text">
+                            返信 : <span th:text="${comment.commentContent}"></span>
+                        </div>
+<!--                        <div class="edit-button">-->
+<!--                            <a th:href="@{/editComment/{id}(id=${comment.commentId})}">-->
+<!--                                <input type="button" value="返信を編集">-->
+<!--                            </a>-->
+<!--                        </div>-->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -174,7 +205,7 @@ label {
 
 </div>
 
-<!-- ボタンのホバーJavaScript -->
+<!-- ボタンのホバーJavaScript あとでダイアログを作るように配置-->
 <script>
     const btn = document.querySelector('.btn')
 
