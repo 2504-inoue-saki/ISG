@@ -57,8 +57,9 @@ public class LoginController {
         UserForm loginUser = userService.findLoginUser(requestLogin);
 
         //アカウントが無い場合またはユーザーが停止している場合はエラーメッセージを今の画面に表示
-        if(loginUser == null || loginUser.getIsStoppedId() == 1){
-            //エラーメッセージをセット
+        if(loginData == null || loginData.getIsStopped() == 1){
+            ModelAndView mav = new ModelAndView();
+          
             mav.addObject("errorMessage",E0003);
             // 画面遷移先を指定
             mav.setViewName("/login");
