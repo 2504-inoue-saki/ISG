@@ -2,23 +2,16 @@ package com.example.ISG.service;
 
 import com.example.ISG.controller.form.MessageForm;
 import com.example.ISG.repository.MessageRepository;
-import com.example.ISG.repository.UserRepository;
 import com.example.ISG.repository.entity.Message;
-import org.springframework.beans.factory.annotation.Autowired;
 import io.micrometer.common.util.StringUtils;
-import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 @Service
 public class MessageService {
     @Autowired
@@ -46,7 +39,6 @@ public class MessageService {
         message.setUpdatedDate(messageForm.getUpdatedDate());
         return message;
     }
-}
     public List<MessageForm> findAllMessage(String start, String end) throws ParseException {
         //デフォルト値の設定
         //全件取得
@@ -80,7 +72,6 @@ public class MessageService {
         List<MessageForm> Messages = setMessageForm(results);
         return Messages;
     }
-
     /*
      * DBから取得したデータをFormに設定
      */
@@ -103,6 +94,4 @@ public class MessageService {
         }
         return Messages;
     }
-
-    }
-
+}
