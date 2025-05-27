@@ -44,6 +44,21 @@ public class UserService {
         return saveUserForm;
     }
 
+    /*
+     * ユーザー登録処理（鈴木）
+     */
+    public void addUser(UserForm userForm) {
+        //引数の型をForm→Entityに変換する用メソッド
+        User user = setUserEntity(userForm);
+        //ユーザー情報を登録
+        userRepository.save(user);
+    }
+
+
+
+
+
+
     public void saveIsStopped(Integer id, short isStopped) {
         userRepository.saveStatus(isStopped, id);
     }

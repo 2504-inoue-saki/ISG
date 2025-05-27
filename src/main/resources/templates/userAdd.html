@@ -15,7 +15,7 @@
 </div>
 
 <div class="main-contents">
-  <form th:action="@{/}" method="post" th:object="${}">
+  <form th:action="@{/userAddProcess}" method="post" th:object="${addUser}">
     アカウント
     <input type="text" th:field="*{account}"/> <br />
     パスワード
@@ -25,7 +25,13 @@
     名前
     <input type="text" th:field="*{name}"/> <br />
     支社名
-    <input type="radio" th:field="*{branchName}"/> <br />
+    <select> <br />
+    <option value="javascript">本社</option>
+    <option value="php">A支社</option>
+    <option value="java">B支社</option>
+    <option value="java">C支社</option>
+    <option value="java">D支社</option>
+    </select> <br />
     部署名
     <input type="text" th:field="*{departmentName}"/> <br />
 

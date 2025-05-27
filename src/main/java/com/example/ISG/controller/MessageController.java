@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -56,7 +57,8 @@ public class MessageController {
 //        }
 
         //今の時間をセット
-        messageForm.setCreatedDate(new Date());
+        LocalDateTime now = LocalDateTime.now();
+        messageForm.setCreatedDate(now);
         messageForm.setUpdatedDate(messageForm.getCreatedDate());
 
         //投稿者IDのセット
@@ -65,8 +67,6 @@ public class MessageController {
 
         // 入力された情報を登録しに行く
         messageService.addMessage(messageForm);
-
-        //アカウントが無い場合またはユーザーが停止している場合はエラーメッセージを今の画面に表示
 
         //ホーム画面へリダイレクト
         return new ModelAndView("redirect:/");

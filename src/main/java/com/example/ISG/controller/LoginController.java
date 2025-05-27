@@ -44,22 +44,20 @@ public class LoginController {
     public ModelAndView loginContent(@Valid @ModelAttribute("loginUser") UserForm requestLogin, BindingResult result) {
         ModelAndView mav = new ModelAndView();
 
-        //リクエストパラメータの入力チェック
-        if(result.hasErrors()){
-            //エラーメッセージをセット
-            mav.addObject("errorMessage", E0001);
-            // 画面遷移先を指定
-            mav.setViewName("/login");
-            return mav;
-        }
+//        //リクエストパラメータの入力チェック
+//        if(result.hasErrors()){
+//            //エラーメッセージをセット
+//            mav.addObject("errorMessage", E0001);
+//            // 画面遷移先を指定
+//            mav.setViewName("/login");
+//            return mav;
+//        }
 
         // 入力されたアカウントとパスワードが存在するか確認しに行く
         UserForm loginUser = userService.findLoginUser(requestLogin);
 
         //アカウントが無い場合またはユーザーが停止している場合はエラーメッセージを今の画面に表示
-        if(loginData == null || loginData.getIsStopped() == 1){
-            ModelAndView mav = new ModelAndView();
-          
+        if(loginUser == null || loginUser.getIsStopped() == 1){
             mav.addObject("errorMessage",E0003);
             // 画面遷移先を指定
             mav.setViewName("/login");
