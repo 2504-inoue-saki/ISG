@@ -9,9 +9,9 @@ import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -90,5 +90,40 @@ public class TopController {
         // 編集対象のユーザをセット
         mav.addObject("formModel", userForm);
         return mav;
+    }
+
+    /*
+     *コメント投稿
+     */
+    @PostMapping("/comment")
+    public ModelAndView addComment(@Validated @ModelAttribute("commentform") CommentForm commentForm, BindingResult result , MessageForm message
+    ) throws ParseException {
+//        if(result.hasErrors()) {
+//            ModelAndView mav = new ModelAndView();
+//            mav.setViewName("redirect:/");
+//            ErrorMessageForm errorMessage = new ErrorMessageForm();
+//            errorMessage.setReportId(commentForm.getReportId());
+//            for (ObjectError error : result.getAllErrors()) {
+//                errorMessage.setErrorMessage(error.getDefaultMessage());
+//            }
+//            session.setAttribute("errorMessage", errorMessage);
+//            return mav;
+//        }
+        // 返信をテーブルに格納
+        commentService.saveComment(commentForm);
+//        レポートIDに対応した投稿を取得//
+        // rootへリダイレクト
+        return new ModelAndView("redirect:/");
+    }
+
+    /*
+     *コメント削除処理
+     */
+    @DeleteMapping("/deleteComment/{id}")
+    public ModelAndView deleteComment(@PathVariable Integer id) {
+        // 投稿をテーブルに格納
+        commentService.deleteComment(id);
+        // rootへリダイレクト
+        return new ModelAndView("redirect:/");
     }
 }
