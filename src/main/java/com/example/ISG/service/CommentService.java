@@ -6,7 +6,10 @@ import com.example.ISG.repository.entity.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,6 +30,7 @@ public class CommentService {
         List<CommentForm> comments = setCommentForm(results);
         return comments;
     }
+
     /*
      * DBから取得したデータをformに設定
      */
@@ -48,5 +52,32 @@ public class CommentService {
             comments.add(comment);
         }
         return comments;
+    }
+
+    /*
+     * コメント投稿
+     */
+    public void saveComment(CommentForm commentForm) throws ParseException {
+        Comment saveComment = setCommentEntity(commentForm);
+        //saveメソッドはテーブルに新規投稿をinsert・updateするような処理
+        commentRepository.save(saveComment);
+        //戻り値はなし
+    }
+
+    /*
+     * リクエストから取得した情報をEntityに設定
+     */
+    private Comment setCommentEntity(CommentForm reqComment) throws ParseException {
+        Comment comment = new Comment();
+        comment.setId(reqComment.getId());
+        comment.setText(reqComment.getText());
+        comment.setUserId(String.valueOf(reqComment.getUserId()));
+        comment.setMessageId(String.valueOf(reqComment.getMessageId()));
+//        createdDateとupdatedDateはDBで勝手に追加される
+        return comment;
+    }
+
+    public void deleteComment(Integer id) {
+        commentRepository.deleteById(id);
     }
 }
