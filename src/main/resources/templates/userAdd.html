@@ -25,15 +25,22 @@
     名前
     <input type="text" th:field="*{name}"/> <br />
     支社名
-    <select> <br />
-    <option value="javascript">本社</option>
-    <option value="php">A支社</option>
-    <option value="java">B支社</option>
-    <option value="java">C支社</option>
-    <option value="java">D支社</option>
+    <select name="branchName"> <br />
+    <option value="1">本社</option>
+    <option value="2">A支社</option>
+    <option value="3">B支社</option>
+    <option value="4">C支社</option>
+    <option value="5">D支社</option>
+    <option value="x" selected>支社を選択してください</option>
     </select> <br />
     部署名
-    <input type="text" th:field="*{departmentName}"/> <br />
+    <select name="departmentName"> <br />
+      <option value="1">総務人事部</option>
+      <option value="2">情報管理部</option>
+      <option value="3">営業部</option>
+      <option value="4">技術部</option>
+      <option value="y" selected>部署を選択してください</option>
+    </select> <br />
 
     <input type="submit" value="ログイン">
   </form>
