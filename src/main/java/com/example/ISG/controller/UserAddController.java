@@ -42,7 +42,6 @@ public class UserAddController {
     //リクエストパラメータの取得
     public ModelAndView userAddProcessContent(@Valid @ModelAttribute("loginUser") UserForm addUser, BindingResult result) {
         ModelAndView mav = new ModelAndView();
-
 //        //チェック系
 //        if(result.hasErrors()){
 //            //エラーメッセージをセット
@@ -52,10 +51,10 @@ public class UserAddController {
 //            return mav;
 //        }
 
+
+
         //入力された情報を登録しに行く
         userService.addUser(addUser);
-
-
         //ユーザー管理画面へリダイレクト
         return new ModelAndView("redirect:/");
     }
