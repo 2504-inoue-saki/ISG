@@ -43,4 +43,5 @@ public class Message {
 
     @Column
     private String errorMessage;
+
 }

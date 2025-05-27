@@ -1,23 +1,33 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <link th:href="@{/css/style.css}" rel="styleSheet">
-  <title>ログイン</title>
+  <title>ユーザ登録</title>
 </head>
 <body>
 <div class="header-contents">
-  <h1>ログイン画面</h1>
+  <h1>ユーザ登録画面</h1>
 </div>
+
 <div class="errorMessage" th:if="${errorMessage != null}">
   <span th:text="${errorMessage}"></span>
 </div>
+
 <div class="main-contents">
-  <form th:action="@{/loginProcess}" method="post" th:object="${loginUser}">
+  <form th:action="@{/}" method="post" th:object="${}">
     アカウント
     <input type="text" th:field="*{account}"/> <br />
     パスワード
     <input type="password" th:field="*{password}"/> <br />
+    パスワード確認用
+    <input type="password" th:field="*{checkPassword}"/> <br />
+    名前
+    <input type="text" th:field="*{name}"/> <br />
+    支社名
+    <input type="radio" th:field="*{branchName}"/> <br />
+    部署名
+    <input type="text" th:field="*{departmentName}"/> <br />
 
     <input type="submit" value="ログイン">
   </form>

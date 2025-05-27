@@ -4,25 +4,42 @@ import com.example.ISG.controller.form.MessageForm;
 import com.example.ISG.repository.MessageRepository;
 import com.example.ISG.repository.entity.Message;
 import io.micrometer.common.util.StringUtils;
-import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 @Service
 public class MessageService {
     @Autowired
     MessageRepository messageRepository;
 
-    public List<MessageForm> findAllMessage(String start, String end ,String category) throws ParseException {
+    /*
+     * 新規投稿登録処理（鈴木）
+     */
+    public void addMessage(MessageForm messageForm){
+        //型をForm→Entityに変換する用メソッド
+        Message message = setMessage(messageForm);
+
+        //登録処理
+        messageRepository.save(message);
+    }
+
+    private Message setMessage(MessageForm messageForm){
+        Message message = new Message();
+        message.setId(messageForm.getId());
+        message.setTitle(messageForm.getTitle());
+        message.setText(messageForm.getText());
+        message.setCategory(messageForm.getCategory());
+        message.setUserId(messageForm.getUserId());
+        message.setCreatedDate(messageForm.getCreatedDate());
+        message.setUpdatedDate(messageForm.getUpdatedDate());
+        return message;
+    }
+    public List<MessageForm> findAllMessage(String start, String end) throws ParseException {
         //デフォルト値の設定
         //全件取得
 //        findAllで実行されている処理はSQL文の「select * from report;」のようなもの
@@ -55,7 +72,6 @@ public class MessageService {
         List<MessageForm> Messages = setMessageForm(results);
         return Messages;
     }
-
     /*
      * DBから取得したデータをFormに設定
      */
@@ -78,6 +94,5 @@ public class MessageService {
         }
         return Messages;
     }
-
-    }
+}
 
