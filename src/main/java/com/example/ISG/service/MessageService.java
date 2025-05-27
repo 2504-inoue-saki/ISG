@@ -39,7 +39,7 @@ public class MessageService {
         message.setUpdatedDate(messageForm.getUpdatedDate());
         return message;
     }
-    public List<MessageForm> findAllMessage(String start, String end) throws ParseException {
+    public List<MessageForm> findAllMessage(String start, String end, String category) throws ParseException {
         //デフォルト値の設定
         //全件取得
 //        findAllで実行されている処理はSQL文の「select * from report;」のようなもの
