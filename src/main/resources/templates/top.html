@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ホーム画面</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+<!--        動作確認できるようになったら消す-->
+        body {
+	background-color: #E3FFFF;
+}
+
+.main-contents {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 20px;
+	margin-right: 20px;
+	background-color: white;
+	/*height: 100%;*/
+	width: 800px;
+}
+
+.tweet-box {
+	width: 100%;
+	height: 56px;
+}
+
+.header {
+	text-align: right;
+}
+
+.profile {
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	height: 100px;
+}
+
+.profile .profile-image {
+	float: left;
+}
+
+.profile .name h2 {
+	font-size: 30px;
+	font-weight: bold;
+	line-height: 36px;
+	margin: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+}
+
+a.profile .account {
+	font-size: 13px;
+	line-height: 22px;
+}
+
+.profile .description {
+	font-size: 13px;
+	line-height: 22px;
+}
+
+.form-area {
+	margin-top: 00px;
+	margin-right: 00px;
+	margin-bottom: 00px;
+	margin-left: 00px;
+	background-color: #ECECFF;
+}
+
+.message-icon {
+	border-bottom-style: ridge;
+	margin-top: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	/*height: 120px;*/
+	/*overflow: scroll;*/
+}
+
+.message-icon .icon {
+	margin-top: 1px;
+	margin-right: 1px;
+	margin-bottom: 1px;
+	margin-left: 1px;
+	float: left;
+}
+
+.message-icon .text {
+	height: 40px;
+}
+
+.message-icon .message {
+	margin-left: 60px;
+}
+
+.message-icon .account-name {
+	margin-top: 1px;
+	margin-bottom: 5px;
+}
+
+.message-icon .account-name .account {
+	font-weight: bold;
+}
+
+.account-name .name {
+	font-weight: lighter;
+	color: gray;
+	font: small-caption;
+}
+
+.message .date {
+	font-weight: lighter;
+	color: gray;
+	font: small-caption;
+}
+
+.copyright {
+	width: 250px;
+	margin: 0 auto;
+}
+
+label {
+	display: block;
+}
+
+.errorMessages {
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	color: red;
+}
+    </style>
+</head>
+<body>
+<div class="main-contents">
+
+        <div class="form-area">
+            <form action="./" method="get">
+                <!--  日付・カテゴリーの値の保持-->
+                日付：<input type="date" name="start" th:value="${start}">～<input type="date" name="end" th:value="${end}">
+                <label for="category">カテゴリ：</label>
+                <input type="text" id = "category" name="category" placeholder="カテゴリ名を入力">
+                <input type="submit" value="絞込">
+            </form>
+        </div>
+
+    <div class="form-area">
+        <div class="message-icon" th:each="message : ${contents}">
+            <div class="message">
+                <div class="account-name">
+                    <span class="account" th:text="${message.name}">ユーザー名</span>
+                    <span class="name" th:text="'@' + ${message.account}">@account</span>
+                </div>
+                <div class="text" th:text="${message.text}">投稿内容</div>
+                <div class="date" th:text="${#temporals.format(message.createdDate, 'yyyy/MM/dd HH:mm')}">2024/01/01 12:00</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 総務人事部用のボタン -->
+    <div th:if="${buttonFlag == 'ON'}">
+        <form action="/someSpecialAction" method="post">
+            <button type="submit">特別な機能（総務人事部のみ）</button>
+        </form>
+    </div>
+
+    <div class="copyright">
+        <p>© ISG System</p>
+    </div>
+
+</div>
+
+<!-- ボタンのホバーJavaScript -->
+<script>
+    const btn = document.querySelector('.btn')
+
+    btn.addEventListener('mouseover',function(){
+      btn.style.background = 'red';
+    })
+
+    btn.addEventListener('mouseleave',function(){
+      btn.style.background = 'black';
+    })
+</script>
+</body>
+</html>
