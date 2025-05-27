@@ -14,7 +14,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     /*
      * ログイン処理（鈴木）
      */
-    public List<User>  findByAccountAndPassword(String account, String password);
+    public List<User> findByAccountAndPassword(String account, String password);
+
+
+
 
     // ユーザを全件取得
     @Query("SELECT u.id, u.account, u.name, u.branchId, u.departmentId, u.isStopped, b.name, d.name FROM User u " +
