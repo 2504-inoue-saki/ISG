@@ -36,7 +36,7 @@ public class TopController {
                             @RequestParam(name="end", required=false) String end,String category) throws ParseException {
         ModelAndView mav = new ModelAndView();
         // 投稿を全件取得した値を入れる箱（contentData）をつくってサービスに渡しています
-        List<MessageForm> contentData = messageService.findAllMessage(start ,end);
+        List<MessageForm> contentData = messageService.findAllMessage(start,end,category);
         List<CommentForm> commentData = commentService.findAllComment();
 
         // 画面遷移先を指定 「現在のURL」/top へ画面遷移することを指定します。

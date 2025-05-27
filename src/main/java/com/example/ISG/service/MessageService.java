@@ -39,7 +39,7 @@ public class MessageService {
         message.setUpdatedDate(messageForm.getUpdatedDate());
         return message;
     }
-    public List<MessageForm> findAllMessage(String start, String end) throws ParseException {
+    public List<MessageForm> findAllMessage(String start, String end, String category) throws ParseException {
         //デフォルト値の設定
         //全件取得
 //        findAllで実行されている処理はSQL文の「select * from report;」のようなもの
@@ -66,7 +66,7 @@ public class MessageService {
 
 
         //ennity型
-        List<Message> results = messageRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(startDay, endDay);
+        List<Message> results = messageRepository.findByCreatedDateBetweenAndCategoryOrderByCreatedDateDesc(startDay, endDay,category);
 //        setReportFormメソッドでEntity→Formに詰め直して、Controllerに戻しています。
 //        これはEntityはデータアクセス時の入れ物、FormはViewへの入出力時に使用する入れ物と役割を分けているためです
         List<MessageForm> Messages = setMessageForm(results);
@@ -95,3 +95,4 @@ public class MessageService {
         return Messages;
     }
 }
+
