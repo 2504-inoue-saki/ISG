@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     /*
-     * ログイン画面処理（鈴木）
+     * ログイン処理（鈴木）
      */
     public List<User>  findByAccountAndPassword(String account, String password);
 

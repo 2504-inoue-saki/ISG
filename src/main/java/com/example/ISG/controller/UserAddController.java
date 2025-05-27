@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-public class LoginController {
+public class UserAddController {
     //インスタンスの注入
     @Autowired
     UserService userService;
@@ -26,22 +26,22 @@ public class LoginController {
     private static final String E0003 = "ログインに失敗しました";
 
     /*
-     * ログイン画面表示（鈴木）
+     * ユーザー登録画面表示（鈴木）
      */
-    @GetMapping("/login")
+    @GetMapping("/userAdd")
     //リクエストパラメータの取得
-    public ModelAndView loginContent() {
+    public ModelAndView userAddContent() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/login");
         return mav;
     }
 
     /*
-     * ログイン処理（鈴木）
+     * ユーザー登録処理（鈴木）
      */
-    @PostMapping("/loginProcess")
+    @PostMapping("/userAddProcess")
     //リクエストパラメータの取得
-    public ModelAndView loginContent(@Valid @ModelAttribute("loginUser") UserForm requestLogin, BindingResult result) {
+    public ModelAndView userAddProcessContent(@Valid @ModelAttribute("loginUser") UserForm requestLogin, BindingResult result) {
         ModelAndView mav = new ModelAndView();
 
         //リクエストパラメータの入力チェック
@@ -57,9 +57,8 @@ public class LoginController {
         UserForm loginUser = userService.findLoginUser(requestLogin);
 
         //アカウントが無い場合またはユーザーが停止している場合はエラーメッセージを今の画面に表示
-        if(loginData == null || loginData.getIsStopped() == 1){
-            ModelAndView mav = new ModelAndView();
-          
+        if(loginUser == null || loginUser.getIsStoppedId() == 1){
+            //エラーメッセージをセット
             mav.addObject("errorMessage",E0003);
             // 画面遷移先を指定
             mav.setViewName("/login");
@@ -71,3 +70,4 @@ public class LoginController {
         return new ModelAndView("redirect:/");
     }
 }
+

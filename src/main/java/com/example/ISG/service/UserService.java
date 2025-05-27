@@ -4,22 +4,24 @@ import com.example.ISG.controller.form.UserForm;
 import com.example.ISG.repository.UserRepository;
 import com.example.ISG.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     /*
-     * ログイン画面処理（鈴木）
+     * ログイン処理（鈴木）
      */
     public UserForm findLoginUser(UserForm loginUser) {
         // パスワード暗号化
-        String encPassword = CipherUtil.encrypt(loginUser.getPassword());
+        String encPassword = passwordEncoder.encode(loginUser.getPassword());
 
         //DBへのselect処理
         List<User> results = userRepository.findByAccountAndPassword(loginUser.getAccount(), encPassword);
