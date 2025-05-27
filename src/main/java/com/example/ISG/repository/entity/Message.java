@@ -7,11 +7,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
-
-import java.util.Date;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "comment")
+@Table(name = "messages")
 @Getter
 @Setter
 public class Message {
@@ -19,16 +20,28 @@ public class Message {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column
     private String title;
+
     @Column
     private String text;
+
     @Column
     private String category;
+
     @Column
     private int userId;
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
     @Column
-    private Date createdDate;
+    private LocalDateTime updatedDate;
+
     @Column
-    private Date updatedDate;
+    private String errorMessage;
+
 }

@@ -1,7 +1,7 @@
 package com.example.ISG.controller.form;
 
 import lombok.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -9,9 +9,9 @@ import java.util.Date;
 public class CommentForm {
     private int id;
     private String text;
-    private String userId;
-    private String messageId;
-    private Date createdDate;
-    private Date updatedDate;
+    private int userId;
+    private int messageId;
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
     private String errorMessage;
 }

@@ -1,7 +1,7 @@
 package com.example.ISG.controller.form;
 
 import lombok.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -12,8 +12,8 @@ public class UserForm {
     private String name;
     private int branchId;
     private int departmentId;
-    private int isStoppedId;
-    private Date createdDate;
-    private Date updatedDate;
+    private int isStopped;
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
     private String errorMessage;
 }
