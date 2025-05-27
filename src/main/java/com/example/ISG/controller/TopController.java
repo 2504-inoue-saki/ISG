@@ -50,8 +50,6 @@ public class TopController {
 
         /* 変数mavを戻り値として返します。 */
         return mav;
-
-        return null;
     }
 
     /*
