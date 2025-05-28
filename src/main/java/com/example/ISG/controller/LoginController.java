@@ -20,7 +20,7 @@ public class LoginController {
     @Autowired
     HttpSession session;
 
-    // エラーメッセージ
+    // エラーメッセージ(これ消したいです/我那覇)
     private static final String E0001 = "アカウントを入力してください";
     private static final String E0002 = "パスワードを入力してください";
     private static final String E0003 = "ログインに失敗しました";
