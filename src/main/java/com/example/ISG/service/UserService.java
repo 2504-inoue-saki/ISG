@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,22 +27,26 @@ public class UserService {
         //DBへのselect処理
         List<User> results = userRepository.findByAccountAndPassword(loginUser.getAccount(), encPassword);
         //DBから取得したresultsの型をEntity→Formに変換する用メソッド
-        UserForm saveUserForm = setUserForm(results);
-        return saveUserForm;
+        return (UserForm) setUserForm(results);
     }
 
-    private UserForm setUserForm(List<User> results){
-        UserForm saveUserForm = new UserForm();
-        User result = results.get(0);
-        saveUserForm.setAccount(result.getAccount());
-        saveUserForm.setPassword(result.getPassword());
-        saveUserForm.setName(result.getName());
-        saveUserForm.setBranchId(result.getBranchId());
-        saveUserForm.setDepartmentId(result.getDepartmentId());
-        saveUserForm.setIsStopped(result.getIsStopped());
-        saveUserForm.setCreatedDate(result.getCreatedDate());
-        saveUserForm.setUpdatedDate(result.getUpdatedDate());
-        return saveUserForm;
+    private List<UserForm> setUserForm(List<User> results) {
+        List<UserForm> users = new ArrayList<>();
+
+        for (User value : results) {
+            UserForm user = new UserForm();
+            user.setId(value.getId());
+            user.setAccount(value.getAccount());
+            user.setPassword(value.getPassword());
+            user.setName(value.getName());
+            user.setBranchId(value.getBranchId());
+            user.setDepartmentId(value.getDepartmentId());
+            user.setIsStopped(value.getIsStopped());
+            user.setCreatedDate(value.getCreatedDate());
+            user.setUpdatedDate(value.getUpdatedDate());
+            users.add(user);
+        }
+        return users;
     }
 
     /*
@@ -53,11 +58,6 @@ public class UserService {
         //ユーザー情報を登録
         userRepository.save(user);
     }
-
-
-
-
-
 
     public void saveIsStopped(Integer id, short isStopped) {
         userRepository.saveStatus(isStopped, id);
@@ -98,10 +98,10 @@ public class UserService {
     public UserForm editUser(int id) {
         List<User> results = new ArrayList<>();
         results.add(userRepository.findById(id).orElse(null));
-        if(results.get(0) != null){
+        if (results.get(0) != null) {
             List<UserForm> users = setUserForm(results);
             return users.get(0);
-        }else{
+        } else {
             return null;
         }
     }

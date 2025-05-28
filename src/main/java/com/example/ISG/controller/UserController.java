@@ -13,17 +13,17 @@ public class UserController {
     /*
      * ユーザ管理画面表示処理
      */
-    @GetMapping("/userAdmin")
-    public ModelAndView adminView(@AuthenticationPrincipal LoginUserDetails loginUser) {
-        ModelAndView mav = new ModelAndView();
-        // 画面遷移先を指定
-        mav.setViewName("userAdmin");
-        List<UserBranchDepartment> userDate = userService.findUserWithBranchWithDepartment();
-        mav.addObject("users", userDate);
-        // ログインユーザーデータオブジェクトを保管
-        mav.addObject("loginUserId", loginUser.getUserId());
-        return mav;
-    }
+//    @GetMapping("/userAdmin")
+//    public ModelAndView adminView(@AuthenticationPrincipal LoginUserDetails loginUser) {
+//        ModelAndView mav = new ModelAndView();
+//        // 画面遷移先を指定
+//        mav.setViewName("userAdmin");
+//        List<UserBranchDepartment> userDate = userService.findUserWithBranchWithDepartment();
+//        mav.addObject("users", userDate);
+//        // ログインユーザーデータオブジェクトを保管
+//        mav.addObject("loginUserId", loginUser.getUserId());
+//        return mav;
+//    }
 
     /*
      * ユーザ復活・停止処理

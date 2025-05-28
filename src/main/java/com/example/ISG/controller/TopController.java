@@ -102,7 +102,7 @@ public class TopController {
      *コメント投稿
      */
     @PostMapping("/comment")
-    public ModelAndView addComment(@Validated @ModelAttribute("commentform") CommentForm commentForm, BindingResult result , MessageForm message
+    public ModelAndView addComment(@Validated @ModelAttribute("commentForm") CommentForm commentForm, BindingResult result , MessageForm message
     ) throws ParseException {
         if(result.hasErrors()) {
             ModelAndView mav = new ModelAndView();
