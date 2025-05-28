@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,7 +21,7 @@ public class LoginController {
     @Autowired
     HttpSession session;
 
-    // エラーメッセージ
+    // エラーメッセージ(これ消したいです/我那覇)
     private static final String E0001 = "アカウントを入力してください";
     private static final String E0002 = "パスワードを入力してください";
     private static final String E0003 = "ログインに失敗しました";
@@ -32,6 +33,8 @@ public class LoginController {
     //リクエストパラメータの取得
     public ModelAndView loginContent() {
         ModelAndView mav = new ModelAndView();
+        UserForm loginUser = new UserForm();
+        mav.addObject("loginUser", loginUser);
         mav.setViewName("/login");
         return mav;
     }
@@ -44,14 +47,19 @@ public class LoginController {
     public ModelAndView loginContent(@Valid @ModelAttribute("loginUser") UserForm requestLogin, BindingResult result) {
         ModelAndView mav = new ModelAndView();
 
-//        //リクエストパラメータの入力チェック
-//        if(result.hasErrors()){
-//            //エラーメッセージをセット
-//            mav.addObject("errorMessage", E0001);
-//            // 画面遷移先を指定
-//            mav.setViewName("/login");
-//            return mav;
-//        }
+        //リクエストパラメータの入力チェック
+        if(result.hasErrors()){
+            //resultの持つ全エラーを要素にしたリスト→result.getFieldErrors()→型はList<FieldError>
+            //要素を1つ取り出してerrorとして扱い処理→全ての要素が尽きるまで繰り返す
+            for(FieldError error : result.getFieldErrors()){
+                //error.getDefaultMessage()で取得したエラーメッセージをセットする
+                //エラーメッセージをセット（上書きされちゃう？）
+                mav.addObject("errorMessage", error.getDefaultMessage());
+                // 画面遷移先を指定
+                mav.setViewName("/login");
+            }
+            return mav;
+        }
 
         // 入力されたアカウントとパスワードが存在するか確認しに行く
         UserForm loginUser = userService.findLoginUser(requestLogin);

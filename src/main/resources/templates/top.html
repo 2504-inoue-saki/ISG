@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>ホーム画面</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link th:href="@{/css/style.css}" rel="styleSheet">
     <style>
 <!--        動作確認できるようになったら消す-->
         body {
@@ -149,8 +149,9 @@ label {
 
 <!--    エラー表示-->
     <div class="message-icon" th:each="message : ${errorMessage}" style="color: red">
-        エラー
+        エラー　どちらが表示されるか確認
         <div th:text="${message.errorMessage}">
+            <span th:error =
         </div>
     </div>
 
