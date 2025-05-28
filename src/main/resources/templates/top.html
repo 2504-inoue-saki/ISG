@@ -11,10 +11,10 @@
         <button class="new-button" type="button">新規投稿</button>
     </a>
     <a href="/login">
-        <button class="new-button" type="button">ログイン</button>
+        <button class="login-button" type="button">ログイン</button>
     </a>
-    <a href="/userAdd">
-        <button class="new-button" type="button">ユーザー登録</button>
+    <a href="/userAdmin">
+        <button class="userAdmin-button" type="button">ユーザ管理</button>
     </a>
 </div>
 <div class="main-contents">
@@ -39,7 +39,7 @@
         <div class="message-icon" th:each="message : ${contents}">
             <div class="message">
                 <div class="account-name">
-                    <span class="account" th:text="${message.name}">ユーザー名</span>
+                    <span class="account" th:text="${message.name}">ユーザ名</span>
                     <span class="name" th:text="'@' + ${message.account}">@account</span>
                 </div>
                 <label for="MessageCategory">カテゴリー:</label><span class="text" id="MessageCategory" th:text="${message.category}"></span>
@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="delete-button">
-<!--                                                                                ログインユーザーとメッセージIDが一致していたら表示する-->
+<!--ログインユーザーとメッセージIDが一致していたら表示する-->
                 <form th:action="@{/delete/{id}(id=${message.id})}" th:method="delete" th:if="${message.userId == message.userId}">
                     <input type="submit" value="削除">
                 </form>

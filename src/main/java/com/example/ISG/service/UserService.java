@@ -1,6 +1,7 @@
 package com.example.ISG.service;
 
 import com.example.ISG.controller.form.UserForm;
+import com.example.ISG.dto.UserBranchDepartment;
 import com.example.ISG.repository.UserRepository;
 import com.example.ISG.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,5 +108,37 @@ public class UserService {
         } else {
             return null;
         }
+    }
+
+    public boolean existsUserByAccount(String account, Integer id) {
+        if (id == null) {
+            // IDがnullの場合（新規登録時）、アカウントが存在するかチェック
+            return userRepository.existsByAccount(account);
+        } else {
+            // IDが指定されている場合（更新時）は、そのID以外のユーザーでアカウントが存在するかチェック
+            return userRepository.existsByAccountAndIdNot(account, id);
+        }
+    }
+
+    public List<UserBranchDepartment> findUserWithBranchWithDepartment() {
+        List<Object[]> results = userRepository.findAllUser();
+        return setUserBranchDepartment(results);
+    }
+
+    private List<UserBranchDepartment> setUserBranchDepartment(List<Object[]> results) {
+        List<UserBranchDepartment> users = new ArrayList<>();
+        for (Object[] objects : results) {
+            UserBranchDepartment user = new UserBranchDepartment();
+            user.setId((int) objects[0]);
+            user.setAccount((String) objects[1]);
+            user.setName((String) objects[2]);
+            user.setBranchId((int) objects[3]);
+            user.setDepartmentId((int) objects[4]);
+            user.setIsStopped((short) objects[5]);
+            user.setBranchName((String) objects[6]);
+            user.setDepartmentName((String) objects[7]);
+            users.add(user);
+        }
+        return users;
     }
 }
