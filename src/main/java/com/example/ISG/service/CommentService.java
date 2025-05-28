@@ -47,8 +47,6 @@ public class CommentService {
             comment.setMessageId(Integer.parseInt(result.getMessageId()));
             comment.setCreatedDate(result.getCreatedDate());
             comment.setUpdatedDate(result.getUpdatedDate());
-//            このエラーメッセージはここで詰める？？
-            comment.setErrorMessage(result.getErrorMessage());
             comments.add(comment);
         }
         return comments;

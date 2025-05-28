@@ -41,7 +41,4 @@ public class Message {
     @Column
     private LocalDateTime updatedDate;
 
-    @Column
-    private String errorMessage;
-
 }

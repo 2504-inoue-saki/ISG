@@ -31,7 +31,4 @@ public class Branch {
     @LastModifiedDate
     @Column
     private LocalDateTime updatedDate;
-
-    @Column
-    private String errorMessage;
 }

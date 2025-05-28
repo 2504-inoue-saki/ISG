@@ -46,7 +46,4 @@ public class User {
     @LastModifiedDate
     @Column
     private LocalDateTime updatedDate;
-
-    @Column
-    private String errorMessage;
 }

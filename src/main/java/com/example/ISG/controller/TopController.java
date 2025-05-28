@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -50,6 +51,7 @@ public class TopController {
         // 投稿データオブジェクトを先ほどのcontentDataをModelAndView型の変数mavへ格納します。
         mav.addObject("contents", contentData);
         mav.addObject("comments", commentData);
+        mav.addObject("commentForm", new CommentForm());
         mav.addObject("start",start);
         mav.addObject("end", end);
 
@@ -104,24 +106,26 @@ public class TopController {
     @PostMapping("/comment")
     public ModelAndView addComment(@Validated @ModelAttribute("commentForm") CommentForm commentForm, BindingResult result , MessageForm message
     ) throws ParseException {
-        if(result.hasErrors()) {
-            ModelAndView mav = new ModelAndView();
-            mav.setViewName("redirect:/");
-//            使わないかも？？
-//            CommentForm errorMessage = new CommentForm();
-//            for (ObjectError error : result.getAllErrors()) {
-//                errorMessage.setErrorMessage(error.getDefaultMessage());
-//            }
-//            session.setAttribute("errorMessage", errorMessage);
+        //formにエラーがあれば条件分岐
+        if (result.hasErrors()) {
+            ModelAndView mav = new ModelAndView("/top");
+            //エラーの入ったfoamを引数なしでおくる（topに似た処理）
+            List<MessageForm> contentData = messageService.findAllMessage(null, null, null);
+            List<CommentForm> commentData = commentService.findAllComment();
+
+            mav.addObject("contents", contentData);
+            mav.addObject("comments", commentData);
+            // エラーがある form を渡す（コメントフォーム）
+            mav.addObject("commentForm", commentForm);
             return mav;
         }
+
         // 返信をテーブルに格納
         commentService.saveComment(commentForm);
 //        レポートIDに対応した投稿を取得//
         // rootへリダイレクト
         return new ModelAndView("redirect:/");
     }
-
     /*
      *コメント削除処理
      */
