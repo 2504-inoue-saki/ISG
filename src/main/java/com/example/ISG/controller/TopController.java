@@ -1,15 +1,18 @@
 package com.example.ISG.controller;
 
 import com.example.ISG.controller.form.*;
+import com.example.ISG.repository.entity.Comment;
 import com.example.ISG.repository.entity.Message;
 import com.example.ISG.service.CommentService;
 import com.example.ISG.service.MessageService;
 import com.example.ISG.service.UserService;
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,6 +33,9 @@ public class TopController {
 
     @Autowired
     UserService userService;
+    //エラー文を表示するため
+    @Autowired
+    HttpSession session;
 
     @GetMapping
     public ModelAndView top(@RequestParam(name="start", required=false) String start,
@@ -52,45 +58,45 @@ public class TopController {
         return mav;
     }
 
-    /*
-     * ユーザ編集画面表示処理
-     */
-    @GetMapping({"/user/edit/", "/user/edit/{id}"})
-    public ModelAndView editUser(@PathVariable(required = false) String id,
-                                 @AuthenticationPrincipal LoginUserDetails loginUser,
-                                 RedirectAttributes redirectAttributes,
-                                 HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView();
-        UserForm userForm = null;
-        if(RequestContextUtils.getInputFlashMap(request) != null) {
-            userForm = (UserForm) RequestContextUtils.getInputFlashMap(request).get("formModel");
-        } else {
-            //URLチェック
-            if (!StringUtils.isBlank(id) && id.matches("^[0-9]*$")) {
-                int intId = Integer.parseInt(id);
-                // 編集するユーザを取得
-                userForm = userService.editUser(intId);
-            }
-        }
-        if (userForm == null) {
-            redirectAttributes.addFlashAttribute("errorMessages","不正なパラメータが入力されました");
-            return new ModelAndView("redirect:/admin");
-        }
-        // 支社情報を全件取得
-        List<BranchForm> branchDate = branchService.findAllBranch();
-        // 部署情報を全件取得
-        List<DepartmentForm> departmentDate = departmentService.findAllDepartment();
-        // 画面遷移先を指定
-        mav.setViewName("edit");
-        // ログインユーザーデータオブジェクトを保持
-        mav.addObject("loginUserId", loginUser.getUserId());
-        // 支社・部署データオブジェクトを保持
-        mav.addObject("branches", branchDate);
-        mav.addObject("departments", departmentDate);
-        // 編集対象のユーザをセット
-        mav.addObject("formModel", userForm);
-        return mav;
-    }
+//    /*
+//     * ユーザ編集画面表示処理
+//     */
+//    @GetMapping({"/user/edit/", "/user/edit/{id}"})
+//    public ModelAndView editUser(@PathVariable(required = false) String id,
+//                                 @AuthenticationPrincipal LoginUserDetails loginUser,
+//                                 RedirectAttributes redirectAttributes,
+//                                 HttpServletRequest request) {
+//        ModelAndView mav = new ModelAndView();
+//        UserForm userForm = null;
+//        if(RequestContextUtils.getInputFlashMap(request) != null) {
+//            userForm = (UserForm) RequestContextUtils.getInputFlashMap(request).get("formModel");
+//        } else {
+//            //URLチェック
+//            if (!StringUtils.isBlank(id) && id.matches("^[0-9]*$")) {
+//                int intId = Integer.parseInt(id);
+//                // 編集するユーザを取得
+//                userForm = userService.editUser(intId);
+//            }
+//        }
+//        if (userForm == null) {
+//            redirectAttributes.addFlashAttribute("errorMessages","不正なパラメータが入力されました");
+//            return new ModelAndView("redirect:/admin");
+//        }
+//        // 支社情報を全件取得
+//        List<BranchForm> branchDate = branchService.findAllBranch();
+//        // 部署情報を全件取得
+//        List<DepartmentForm> departmentDate = departmentService.findAllDepartment();
+//        // 画面遷移先を指定
+//        mav.setViewName("edit");
+//        // ログインユーザーデータオブジェクトを保持
+//        mav.addObject("loginUserId", loginUser.getUserId());
+//        // 支社・部署データオブジェクトを保持
+//        mav.addObject("branches", branchDate);
+//        mav.addObject("departments", departmentDate);
+//        // 編集対象のユーザをセット
+//        mav.addObject("formModel", userForm);
+//        return mav;
+//    }
 
     /*
      *コメント投稿
@@ -101,12 +107,12 @@ public class TopController {
         if(result.hasErrors()) {
             ModelAndView mav = new ModelAndView();
             mav.setViewName("redirect:/");
-            ErrorMessageForm errorMessage = new ErrorMessageForm();
-            errorMessage.setReportId(commentForm.getReportId());
-            for (ObjectError error : result.getAllErrors()) {
-                errorMessage.setErrorMessage(error.getDefaultMessage());
-            }
-            session.setAttribute("errorMessage", errorMessage);
+//            使わないかも？？
+//            CommentForm errorMessage = new CommentForm();
+//            for (ObjectError error : result.getAllErrors()) {
+//                errorMessage.setErrorMessage(error.getDefaultMessage());
+//            }
+//            session.setAttribute("errorMessage", errorMessage);
             return mav;
         }
         // 返信をテーブルに格納

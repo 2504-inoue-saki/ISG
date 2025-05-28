@@ -149,8 +149,9 @@ label {
 
 <!--    エラー表示-->
     <div class="message-icon" th:each="message : ${errorMessage}" style="color: red">
-        エラー
+        エラー　どちらが表示されるか確認
         <div th:text="${message.errorMessage}">
+            <span th:error =
         </div>
     </div>
 
