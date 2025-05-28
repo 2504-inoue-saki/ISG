@@ -80,11 +80,11 @@ public class UserService {
         user.setId(reqUser.getId());
         user.setAccount(reqUser.getAccount());
         // パスワードの変換処理？
-//        if(!reqUser.getPassword().isBlank()) {
-//            user.setPassword(passwordEncoder.encode(reqUser.getPassword()));
-//        } else {
-//            user.setPassword(editUser(reqUser.getId()).getPassword());
-//        }
+        if(!reqUser.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(reqUser.getPassword()));
+        } else {
+            user.setPassword(editUser(reqUser.getId()).getPassword());
+        }
         user.setName(reqUser.getName());
         user.setBranchId(reqUser.getBranchId());
         user.setDepartmentId(reqUser.getDepartmentId());
@@ -92,17 +92,17 @@ public class UserService {
         return user;
     }
 
-//    /*
-//     * レコード1件取得
-//     */
-//    public UserForm editUser(int id) {
-//        List<User> results = new ArrayList<>();
-//        results.add(userRepository.findById(id).orElse(null));
-//        if(results.get(0) != null){
-//            List<UserForm> users = setUserForm(results);
-//            return users.get(0);
-//        }else{
-//            return null;
-//        }
-//    }
+    /*
+     * レコード1件取得
+     */
+    public UserForm editUser(int id) {
+        List<User> results = new ArrayList<>();
+        results.add(userRepository.findById(id).orElse(null));
+        if(results.get(0) != null){
+            List<UserForm> users = setUserForm(results);
+            return users.get(0);
+        }else{
+            return null;
+        }
+    }
 }
