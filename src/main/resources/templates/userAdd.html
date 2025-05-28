@@ -10,7 +10,7 @@
   <h1>ユーザ登録画面</h1>
 </div>
 
-<div class="errorMessage" th:if="${errorMessage != null}">
+<div class="errorMessages" th:each="errorMessage : ${errorMessages}" th:if="${errorMessages != null}">
   <span th:text="${errorMessage}"></span>
 </div>
 
@@ -25,7 +25,7 @@
     名前
     <input type="text" th:field="*{name}"/> <br />
     支社名
-    <select th:field="*{stringBranchId}"> <br />
+    <select th:field="*{branchId}"> <br />
     <option value="1">本社</option>
     <option value="2">A支社</option>
     <option value="3">B支社</option>
@@ -34,7 +34,7 @@
     <option value="default" selected>支社を選択してください</option>
     </select> <br />
     部署名
-    <select th:field="*{stringDepartmentId}"> <br />
+    <select th:field="*{departmentId}"> <br />
       <option value="1">総務人事部</option>
       <option value="2">情報管理部</option>
       <option value="3">営業部</option>

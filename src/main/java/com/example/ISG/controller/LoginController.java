@@ -11,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -49,22 +50,26 @@ public class LoginController {
 
         //リクエストパラメータの入力チェック
         if(result.hasErrors()){
-            //resultの持つ全エラーを要素にしたリスト→result.getFieldErrors()→型はList<FieldError>
-            //要素を1つ取り出してerrorとして扱い処理→全ての要素が尽きるまで繰り返す
+            //エラーメッセージを入れる用のリストを作っておく
+            List<String> errorMessages = new ArrayList<String>();
+
+            //result.getFieldErrors()はresultの持つ全エラーを要素にしたリスト→型はList<FieldError>
+            //要素を1つ取り出してerrorに代入して処理→全ての要素が尽きるまで繰り返す
             for(FieldError error : result.getFieldErrors()){
-                //error.getDefaultMessage()で取得したエラーメッセージをセットする
-                //エラーメッセージをセット（上書きされちゃう？）
-                mav.addObject("errorMessage", error.getDefaultMessage());
-                // 画面遷移先を指定
-                mav.setViewName("/login");
+                //error.getDefaultMessage()で取得したエラーメッセージをリストに追加
+                errorMessages.add(error.getDefaultMessage());
             }
+            //エラーメッセージが詰まったリストをviewに送る
+            mav.addObject("errorMessages", errorMessages);
+            // 画面遷移先を指定
+            mav.setViewName("/login");
             return mav;
         }
 
         // 入力されたアカウントとパスワードが存在するか確認しに行く
         UserForm loginUser = userService.findLoginUser(requestLogin);
 
-        //アカウントが無い場合またはユーザーが停止している場合はエラーメッセージを今の画面に表示
+        //ログインユーザー情報チェック
         if(loginUser == null || loginUser.getIsStopped() == 1){
             mav.addObject("errorMessage",E0003);
             // 画面遷移先を指定
