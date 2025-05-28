@@ -32,6 +32,4 @@ public class Department {
     @Column
     private LocalDateTime updatedDate;
 
-    @Column
-    private String errorMessage;
 }

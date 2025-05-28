@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,14 +63,13 @@ public class MessageService {
             strEndDay = sdf.format(date) + " 23:59:59";        //デフォルト値
         }
         //2つともDate型に変換する
-        SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date startDay = sdFormat.parse(strStartDay);
-        Date endDay = sdFormat.parse(strEndDay);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime startDay = LocalDateTime.parse(strStartDay,dtf);
+        LocalDateTime endDay = LocalDateTime.parse(strEndDay,dtf);
 
 
         //ennity型
         List<Message> results = messageRepository.findByCreatedDateBetweenAndCategoryOrderByCreatedDateDesc(startDay, endDay,category);
-//        setReportFormメソッドでEntity→Formに詰め直して、Controllerに戻しています。
 //        これはEntityはデータアクセス時の入れ物、FormはViewへの入出力時に使用する入れ物と役割を分けているためです
         List<MessageForm> Messages = setMessageForm(results);
         return Messages;
@@ -89,7 +91,6 @@ public class MessageService {
             message.setUserId(result.getUserId());
             message.setCreatedDate(result.getCreatedDate());
             message.setUpdatedDate(result.getUpdatedDate());
-            message.setErrorMessage(result.getErrorMessage());
             Messages.add(message);
         }
         return Messages;

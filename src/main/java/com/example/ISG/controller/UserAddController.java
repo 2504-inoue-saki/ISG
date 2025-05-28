@@ -7,10 +7,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.ISG.constfolder.ErrorMessage.E0001;
@@ -43,13 +45,18 @@ public class UserAddController {
     public ModelAndView userAddProcessContent(@Valid @ModelAttribute("addUser") UserForm addUser, BindingResult result) {
         ModelAndView mav = new ModelAndView();
 
-//        //チェック系
+//        //リクエストパラメータの入力チェック
 //        if(result.hasErrors()){
-//
-//            //リクエスト情報をセット
-//            mav.addObject("addUser",addUser);
-//            //エラーメッセージをセット
-//            mav.addObject("errorMessage", E0001);
+//            //エラーメッセージを入れる用のリストを作っておく
+//            List<String> errorMessages = new ArrayList<String>();
+//            //result.getFieldErrors()はresultの持つ全エラーを要素にしたリスト→型はList<FieldError>
+//            //要素を1つ取り出してerrorに代入して処理→全ての要素が尽きるまで繰り返す
+//            for(FieldError error : result.getFieldErrors()){
+//                //error.getDefaultMessage()で取得したエラーメッセージをリストに追加
+//                errorMessages.add(error.getDefaultMessage());
+//            }
+//            //エラーメッセージが詰まったリストをviewに送る
+//            mav.addObject("errorMessages", errorMessages);
 //            // 画面遷移先を指定
 //            mav.setViewName("/userAdd");
 //            return mav;
@@ -62,14 +69,14 @@ public class UserAddController {
 
         //String型の中身チェック（この後intにしたいから）
 
-        //型変更 String→int してaddUserにセット
-        addUser.setBranchId(Integer.parseInt(addUser.getStringBranchId()));
-        addUser.setDepartmentId(Integer.parseInt(addUser.getStringDepartmentId()));
+//        //型変更 String→int してaddUserにセット
+//        addUser.setBranchId(Integer.parseInt(addUser.getStringBranchId()));
+//        addUser.setDepartmentId(Integer.parseInt(addUser.getStringDepartmentId()));
 
         //入力された情報を登録しに行く
         userService.addUser(addUser);
         //ユーザー管理画面へリダイレクト
-        return new ModelAndView("redirect:/???");
+        return new ModelAndView("redirect:/");
     }
 }
 
