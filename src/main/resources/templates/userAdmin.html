@@ -31,22 +31,22 @@
             <td class="table-account" th:text="${user.account}"></td>
             <td class="table-name" th:text="${user.name}"></td>
             <td class="table-isStopped">
-                <div class="update-isStopped">
-                    <div th:if="${user.id} == ${loginUserId}">
-                        <span th:if="${user.isStopped} == 0">稼働</span>
-                        <span th:if="${user.isStopped} == 1">停止</span>
-                    </div>
-                    <div th:if="${user.id} != ${loginUserId}">
-                        <form th:action="@{/update-isStopped/{id}(id=${user.id})}" th:method="put">
-                            <select class="select-box" name="isStopped">
-                                <option value="0" th:selected="${user.isStopped == 0}">稼働</option>
-                                <option value="1" th:selected="${user.isStopped == 1}">停止</option>
-                            </select>
-                            <input name="userName" th:value="${user.name}" type="hidden">
-                            <input class="update-isStopped-button" type="submit" value="変更">
-                        </form>
-                    </div>
-                </div>
+<!--                <div class="update-isStopped">-->
+<!--                    <div th:if="${user.id} == ${loginUserId}">-->
+<!--                        <span th:if="${user.isStopped} == 0">稼働</span>-->
+<!--                        <span th:if="${user.isStopped} == 1">停止</span>-->
+<!--                    </div>-->
+<!--                    <div th:if="${user.id} != ${loginUserId}">-->
+<!--                        <form th:action="@{/update-isStopped/{id}(id=${user.id})}" th:method="put">-->
+<!--                            <select class="select-box" name="isStopped">-->
+<!--                                <option value="0" th:selected="${user.isStopped == 0}">稼働</option>-->
+<!--                                <option value="1" th:selected="${user.isStopped == 1}">停止</option>-->
+<!--                            </select>-->
+<!--                            <input name="userName" th:value="${user.name}" type="hidden">-->
+<!--                            <input class="update-isStopped-button" type="submit" value="変更">-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
             </td>
             <td class="table-branch-name" th:text="${user.branchName}"></td>
             <td class="table-department-name" th:text="${user.departmentName}"></td>
