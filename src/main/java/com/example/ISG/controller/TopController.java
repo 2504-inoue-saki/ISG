@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -96,7 +97,7 @@ public class TopController {
      *コメント投稿
      */
     @PostMapping("/comment")
-    public ModelAndView addComment(@Validated @ModelAttribute("commentform") CommentForm commentForm, BindingResult result , MessageForm message
+    public ModelAndView addComment(@Validated @ModelAttribute("commentForm") CommentForm commentForm, BindingResult result , MessageForm message
     ) throws ParseException {
         if(result.hasErrors()) {
             ModelAndView mav = new ModelAndView();
