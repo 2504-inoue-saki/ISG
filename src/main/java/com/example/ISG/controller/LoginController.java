@@ -32,6 +32,8 @@ public class LoginController {
     //リクエストパラメータの取得
     public ModelAndView loginContent() {
         ModelAndView mav = new ModelAndView();
+        UserForm loginUser = new UserForm();
+        mav.addObject("loginUser", loginUser);
         mav.setViewName("/login");
         return mav;
     }
