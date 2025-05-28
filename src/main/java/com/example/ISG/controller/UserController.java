@@ -7,6 +7,7 @@ import com.example.ISG.dto.UserBranchDepartment;
 import com.example.ISG.service.UserService;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+@Controller
 public class UserController {
 @Autowired UserService userService;
     /*
@@ -49,7 +51,7 @@ public class UserController {
         return new ModelAndView("redirect:/userAdmin");
     }
 
-        /*
+    /*
      * ユーザ編集画面表示処理
      */
 //    @GetMapping({"/user/edit/", "/user/edit/{id}"})
