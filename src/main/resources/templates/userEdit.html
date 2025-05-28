@@ -1,57 +1,60 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <link th:href="@{/css/style.css}" rel="styleSheet">
-  <title>ユーザ編集</title>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="styleSheet">
+    <title>ユーザ編集</title>
 </head>
 <body>
 <div class="header-contents">
-  <h1>ユーザ編集</h1>
+    <h1>ユーザ編集</h1>
 </div>
 <div class="main-contents">
-  <div class="errorMessages" th:each="errorMessage : ${errorMessages}">
-    <span th:text="${errorMessage}"></span>
-  </div>
-  <form th:method="put" th:action="@{/user/update/{id}(id=${formModel.id})}" th:object="${formModel}">
-    <div class="form-area">
-      <label>アカウント</label><br/>
-      <input class="text-box" th:field="*{account}"/><br/>
-      <label>パスワード</label><br/>
-      <input class="text-box" type="password" th:field="*{password}"/><br/>
-      <label>確認用パスワード</label><br/>
-      <input class="text-box" type="password" th:field="*{confirmPassword}"/><br/>
-      <label>氏名</label><br/>
-      <input class="text-box" th:field="*{name}"/><br/>
-      <label>支社</label><br/>
-      <div th:if="${formModel.id} == ${loginUserId}">
-        <span th:each="branch : ${branches}" th:if="${branch.id} == ${formModel.branchId}" th:text="${branch.name}"/>
-        <input type="hidden" th:field="*{branchId}"/>
-      </div>
-      <div th:if="${formModel.id != loginUserId}">
-        <select class="select-box" th:field="*{branchId}">
-          <option value="">--</option>
-          <option th:each="branch : ${branches}" th:value="${branch.id}" th:text="${branch.name}"></option>
-        </select>
-      </div>
-      <label>部署</label><br/>
-      <div th:if="${formModel.id} == ${loginUserId}">
-        <span th:each="department : ${departments}" th:if="${department.id} == ${formModel.departmentId}" th:text="${department.name}"/>
-        <input type="hidden" th:field="*{departmentId}"/>
-      </div>
-      <div th:if="${formModel.id != loginUserId}">
-        <select class="select-box" th:field="*{departmentId}">
-          <option value="">--</option>
-          <option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.name}"></option>
-        </select>
-      </div>
-      <input type="hidden" th:field="*{isStopped}"/>
-      <input class="submit-button" type="submit" value="更新"/>
+    <div class="errorMessages" th:each="errorMessage : ${errorMessages}">
+        <span th:text="${errorMessage}"></span>
     </div>
-  </form>
+    <form th:method="put" th:action="@{/user/update/{id}(id=${formModel.id})}" th:object="${formModel}">
+        <div class="form-area">
+            <label>アカウント</label><br/>
+            <input class="text-box" th:field="*{account}"/><br/>
+            <label>パスワード</label><br/>
+            <input class="text-box" type="password" th:field="*{password}"/><br/>
+            <label>確認用パスワード</label><br/>
+            <input class="text-box" type="password" th:field="*{confirmPassword}"/><br/>
+            <label>氏名</label><br/>
+            <input class="text-box" th:field="*{name}"/><br/>
+            <label>支社</label><br/>
+            <div th:if="${formModel.id} == ${loginUserId}">
+                <span th:each="branch : ${branches}" th:if="${branch.id} == ${formModel.branchId}"
+                      th:text="${branch.name}"/>
+                <input type="hidden" th:field="*{branchId}"/>
+            </div>
+            <div th:if="${formModel.id != loginUserId}">
+                <select class="select-box" th:field="*{branchId}">
+                    <option value="">--</option>
+                    <option th:each="branch : ${branches}" th:value="${branch.id}" th:text="${branch.name}"></option>
+                </select>
+            </div>
+            <label>部署</label><br/>
+            <div th:if="${formModel.id} == ${loginUserId}">
+                <span th:each="department : ${departments}" th:if="${department.id} == ${formModel.departmentId}"
+                      th:text="${department.name}"/>
+                <input type="hidden" th:field="*{departmentId}"/>
+            </div>
+            <div th:if="${formModel.id != loginUserId}">
+                <select class="select-box" th:field="*{departmentId}">
+                    <option value="">--</option>
+                    <option th:each="department : ${departments}" th:value="${department.id}"
+                            th:text="${department.name}"></option>
+                </select>
+            </div>
+            <input type="hidden" th:field="*{isStopped}"/>
+            <input class="submit-button" type="submit" value="更新"/>
+        </div>
+    </form>
 </div>
 <div class="footer-contents">
-  <a th:href="@{/admin}">戻る</a>
+    <a th:href="@{/admin}">戻る</a>
 </div>
 </body>
 </html>

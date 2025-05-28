@@ -16,8 +16,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
      */
     public List<User> findByAccountAndPassword(String account, String password);
 
-
-
+    // ユーザの重複チェック（新規登録時）
+    boolean existsByAccount(String account);
+    // ユーザの重複チェック（更新時）
+    boolean existsByAccountAndIdNot(String account, int id);
 
     // ユーザを全件取得
     @Query("SELECT u.id, u.account, u.name, u.branchId, u.departmentId, u.isStopped, b.name, d.name FROM User u " +
