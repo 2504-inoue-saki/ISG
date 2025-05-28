@@ -36,7 +36,9 @@ public class MessageController {
     @GetMapping("/new")
     public ModelAndView newContent() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("/login");
+        MessageForm messageForm = new MessageForm();
+        mav.addObject("message", messageForm);
+        mav.setViewName("/new");
         return mav;
     }
 
