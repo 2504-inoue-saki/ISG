@@ -89,6 +89,9 @@ public class UserService {
         user.setBranchId(reqUser.getBranchId());
         user.setDepartmentId(reqUser.getDepartmentId());
         user.setIsStopped(reqUser.getIsStopped());
+        //下記鈴木追加
+        user.setCreatedDate(reqUser.getCreatedDate());
+        user.setUpdatedDate(reqUser.getUpdatedDate());
         return user;
     }
 

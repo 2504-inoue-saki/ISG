@@ -45,22 +45,22 @@ public class UserAddController {
     public ModelAndView userAddProcessContent(@Valid @ModelAttribute("addUser") UserForm addUser, BindingResult result) {
         ModelAndView mav = new ModelAndView();
 
-        //リクエストパラメータの入力チェック
-        if(result.hasErrors()){
-            //エラーメッセージを入れる用のリストを作っておく
-            List<String> errorMessages = new ArrayList<String>();
-            //result.getFieldErrors()はresultの持つ全エラーを要素にしたリスト→型はList<FieldError>
-            //要素を1つ取り出してerrorに代入して処理→全ての要素が尽きるまで繰り返す
-            for(FieldError error : result.getFieldErrors()){
-                //error.getDefaultMessage()で取得したエラーメッセージをリストに追加
-                errorMessages.add(error.getDefaultMessage());
-            }
-            //エラーメッセージが詰まったリストをviewに送る
-            mav.addObject("errorMessages", errorMessages);
-            // 画面遷移先を指定
-            mav.setViewName("/userAdd");
-            return mav;
-        }
+//        //リクエストパラメータの入力チェック
+//        if(result.hasErrors()){
+//            //エラーメッセージを入れる用のリストを作っておく
+//            List<String> errorMessages = new ArrayList<String>();
+//            //result.getFieldErrors()はresultの持つ全エラーを要素にしたリスト→型はList<FieldError>
+//            //要素を1つ取り出してerrorに代入して処理→全ての要素が尽きるまで繰り返す
+//            for(FieldError error : result.getFieldErrors()){
+//                //error.getDefaultMessage()で取得したエラーメッセージをリストに追加
+//                errorMessages.add(error.getDefaultMessage());
+//            }
+//            //エラーメッセージが詰まったリストをviewに送る
+//            mav.addObject("errorMessages", errorMessages);
+//            // 画面遷移先を指定
+//            mav.setViewName("/userAdd");
+//            return mav;
+//        }
 
         //今の時間をセット
         LocalDateTime now = LocalDateTime.now();
@@ -76,7 +76,7 @@ public class UserAddController {
         //入力された情報を登録しに行く
         userService.addUser(addUser);
         //ユーザー管理画面へリダイレクト
-        return new ModelAndView("redirect:/???");
+        return new ModelAndView("redirect:/");
     }
 }
 
