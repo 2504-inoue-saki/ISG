@@ -105,4 +105,17 @@ public class UserService {
             return null;
         }
     }
+
+    /*
+     * アカウント重複チェック
+     */
+    public boolean existsUserByAccount(String account, Integer id) {
+        if (id == null) {
+            // IDがnullの場合（新規登録時）は、単にアカウントが存在するかチェック
+            return userRepository.existsByAccount(account);
+        } else {
+            // IDが指定されている場合（更新時）は、そのID以外のユーザーでアカウントが存在するかチェック
+            return userRepository.existsByAccountAndIdNot(account, id);
+        }
+    }
 }
