@@ -51,9 +51,10 @@ public class TopController {
             mav.addObject("loginUser",loginUser);
         }
 
-        Object errorMessage = session.getAttribute("errorMessage");
+        Object errorMessage = session.getAttribute("errorMessages");
         if (errorMessage != null) {
-            mav.addObject("errorMessages", List.of(errorMessage));
+            mav.addObject("errorMessages", errorMessage);
+            session.removeAttribute("errorMessages");
         }
         // 画面遷移先を指定 「現在のURL」/top へ画面遷移することを指定します。
         mav.setViewName("/top");

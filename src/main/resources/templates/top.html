@@ -41,11 +41,11 @@
         <div class="message-icon" th:if="${#fields.hasErrors('text')}" >
             <p th:errors="*{text}" style="color:red"></p>
         </div>
-        <div th:if="${errorMessage != null}">
+<!--        <div th:if="${errorMessages != null}">-->
             <ul>
                 <li th:each="message : ${errorMessages}" th:text="${message}" style="color:red">eroor</li>
             </ul>
-        </div>
+<!--        </div>-->
     </div>
 
     <div class="form-area">
