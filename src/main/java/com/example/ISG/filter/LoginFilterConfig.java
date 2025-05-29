@@ -12,8 +12,8 @@ public class LoginFilterConfig {
         public FilterRegistrationBean<LoginFilter> LoginFilter() {
 
             FilterRegistrationBean<LoginFilter> bean = new FilterRegistrationBean<>(new LoginFilter());
-            bean.addUrlPatterns("/top/*");
-//            bean.setOrder();
+            bean.addUrlPatterns("/new","/add","/delete/*","/comment","/deleteComment/*","/userAdmin","/update-isStopped/*");
+//            bean.setOrder();　フィルターの順番
             return bean;
         }
 

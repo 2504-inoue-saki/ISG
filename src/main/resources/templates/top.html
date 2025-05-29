@@ -6,15 +6,23 @@
     <link th:href="@{/css/style.css}" rel="styleSheet">
 </head>
 <body>
-<div class="message-icon">
-    <a href="/new">
-        <button class="new-button" type="button">新規投稿</button>
-    </a>
+<div class="message-icon" th:if="${loginUser == null}">
     <a href="/login">
         <button class="login-button" type="button">ログイン</button>
     </a>
     <a href="/userAdmin">
         <button class="userAdmin-button" type="button">ユーザ管理</button>
+    </a>
+</div>
+<div class="message-icon" th:if="${loginUser != null}">
+    <a href="/new">
+        <button class="new-button" type="button">新規投稿</button>
+    </a>
+    <a href="/logout">
+        <button class="new-button" type="button">ログアウト</button>
+    </a>
+    <a href="/userEdit">
+        <button class="new-button" type="button">ユーザー編集</button>
     </a>
 </div>
 <div class="main-contents">
@@ -33,6 +41,11 @@
         <div class="message-icon" th:if="${#fields.hasErrors('text')}" >
             <p th:errors="*{text}" style="color:red"></p>
         </div>
+<!--        <div th:if="${errorMessages != null}">-->
+            <ul>
+                <li th:each="message : ${errorMessages}" th:text="${message}" style="color:red">eroor</li>
+            </ul>
+<!--        </div>-->
     </div>
 
     <div class="form-area">

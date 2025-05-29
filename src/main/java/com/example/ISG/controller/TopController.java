@@ -46,6 +46,16 @@ public class TopController {
         List<MessageForm> contentData = messageService.findAllMessage(start, end, category);
         List<CommentForm> commentData = commentService.findAllComment();
 
+        Object loginUser = session.getAttribute("loginUser");
+        if(loginUser != null){
+            mav.addObject("loginUser",loginUser);
+        }
+
+        Object errorMessage = session.getAttribute("errorMessages");
+        if (errorMessage != null) {
+            mav.addObject("errorMessages", errorMessage);
+            session.removeAttribute("errorMessages");
+        }
         // 画面遷移先を指定 「現在のURL」/top へ画面遷移することを指定します。
         mav.setViewName("/top");
         // 投稿データオブジェクトを先ほどのcontentDataをModelAndView型の変数mavへ格納します。
