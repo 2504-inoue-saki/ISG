@@ -28,7 +28,9 @@ public class UserService {
         //DBへのselect処理
         List<User> results = userRepository.findByAccountAndPassword(loginUser.getAccount(), encPassword);
         //DBから取得したresultsの型をEntity→Formに変換する用メソッド
-        return (UserForm) setUserForm(results);
+        List<UserForm> users = setUserForm(results);
+        UserForm user = users.get(0);
+        return user;
     }
 
     private List<UserForm> setUserForm(List<User> results) {
