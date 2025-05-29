@@ -12,7 +12,7 @@ public class LoginFilterConfig {
         public FilterRegistrationBean<LoginFilter> LoginFilter() {
 
             FilterRegistrationBean<LoginFilter> bean = new FilterRegistrationBean<>(new LoginFilter());
-            bean.addUrlPatterns("/new","/add","/delete/*","/comment","/deleteComment/*","/userAdmin","/update-isStopped/*");
+            bean.addUrlPatterns("/new","/add","/delete/*","/comment","/deleteComment/*","/update-isStopped/*");
 //            bean.setOrder();　フィルターの順番
             return bean;
         }
