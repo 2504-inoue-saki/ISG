@@ -12,18 +12,22 @@ public class UserForm {
     private int id;
 
     @NotEmpty(message = E0001)
-//    @Size(min = 22, max = 6, message = E0014)
+    @Size(min = 6, max = 20, message = E0014)
+//    @Pattern(regexp = "正規表現あとでやる", message = E0014)
     private String account;
 
     @NotEmpty(message = E0002)
+    @NotEmpty(message = E0016)
+    @Size(min = 6, max = 20, message = E0017)
+//    @Pattern(regexp = "正規表現あとでやる", message = E0017)
     private String password;
 
     @NotEmpty(message = E0019)
     @Size(max = 10, message = E0020)
     private String name;
-    @Min(1)
+    @Min(value = 1, message = E0021)
     private int branchId;
-    @Min(1)
+    @Min(value = 1, message = E0022)
     private int departmentId;
 
     private int isStopped;

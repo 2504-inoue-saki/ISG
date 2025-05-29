@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.ISG.constfolder.ErrorMessage.E0001;
+import static com.example.ISG.constfolder.ErrorMessage.*;
 
 @Controller
 public class UserAddController {
@@ -45,7 +45,7 @@ public class UserAddController {
     public ModelAndView userAddProcessContent(@Valid @ModelAttribute("addUser") UserForm addUser, BindingResult result) {
         ModelAndView mav = new ModelAndView();
 
-//        //リクエストパラメータの入力チェック
+//        //リクエストパラメータの入力＆文字数チェック＆半角文字チェック
 //        if(result.hasErrors()){
 //            //エラーメッセージを入れる用のリストを作っておく
 //            List<String> errorMessages = new ArrayList<String>();
@@ -61,6 +61,33 @@ public class UserAddController {
 //            mav.setViewName("/userAdd");
 //            return mav;
 //        }
+
+        //重複チェック
+
+        //妥当性チェック①パスワードとパスワード（確認用）が一致しない場合
+        if (addUser.getPassword() != addUser.getCheckPassword()){
+            //エラーメッセージを入れる用のリストを作っておく
+            List<String> errorMessages = new ArrayList<String>();
+            errorMessages.add(E0018);
+            //エラーメッセージが詰まったリストをviewに送る
+            mav.addObject("errorMessages", errorMessages);
+            // 画面遷移先を指定
+            mav.setViewName("/userAdd");
+            return mav;
+        }
+
+        //妥当性チェック②支社と部署の組み合わせが不正の場合
+        if (addUser.getPassword() != addUser.getCheckPassword()){
+            //エラーメッセージを入れる用のリストを作っておく
+            List<String> errorMessages = new ArrayList<String>();
+            errorMessages.add(E0018);
+
+            //エラーメッセージが詰まったリストをviewに送る
+            mav.addObject("errorMessages", errorMessages);
+            // 画面遷移先を指定
+            mav.setViewName("/userAdd");
+            return mav;
+        }
 
         //今の時間をセット
         LocalDateTime now = LocalDateTime.now();
