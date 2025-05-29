@@ -14,7 +14,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     /*
      * ログイン処理（鈴木）
      */
-    public List<User> findByAccountAndPassword(String account, String password);
+    public List<User> findByAccount(String account);
 
     // 新規登録時の重複チェック
     boolean existsByAccount(String account);

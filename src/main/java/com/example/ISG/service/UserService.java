@@ -4,6 +4,7 @@ import com.example.ISG.controller.form.UserForm;
 import com.example.ISG.dto.UserBranchDepartment;
 import com.example.ISG.repository.UserRepository;
 import com.example.ISG.repository.entity.User;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,15 +23,22 @@ public class UserService {
      * ログイン処理（鈴木）
      */
     public UserForm findLoginUser(UserForm loginUser) {
-        // パスワード暗号化
-        String encPassword = passwordEncoder.encode(loginUser.getPassword());
 
         //DBへのselect処理
-        List<User> results = userRepository.findByAccountAndPassword(loginUser.getAccount(), encPassword);
-        //DBから取得したresultsの型をEntity→Formに変換する用メソッド
-        List<UserForm> users = setUserForm(results);
-        UserForm user = users.get(0);
-        return user;
+        List<User> users = userRepository.findByAccount(loginUser.getAccount());
+
+        if (users != null && !users.isEmpty()) {
+            User foundUser = users.get(0); // 該当アカウントのユーザーが見つかった場合
+
+            // PasswordEncoderのmatchesメソッドでパスワードを照合
+            // matches(入力された生のパスワード, データベースに保存されているハッシュ化されたパスワード)
+            if (passwordEncoder.matches(loginUser.getPassword(), foundUser.getPassword())) {
+                UserForm userForm = new UserForm();
+                BeanUtils.copyProperties(foundUser, userForm);
+                return userForm; // パスワードが一致した場合のみユーザー情報を返す
+            }
+        }
+        return null;
     }
 
     private List<UserForm> setUserForm(List<User> results) {
@@ -57,6 +65,7 @@ public class UserService {
      */
     public void addUser(UserForm userForm) {
         //引数の型をForm→Entityに変換する用メソッド
+        userForm.setPassword(passwordEncoder.encode(userForm.getPassword())); // ★重要★ 登録時にパスワードをハッシュ化
         User user = setUserEntity(userForm);
         //ユーザー情報を登録
         userRepository.save(user);
@@ -83,7 +92,7 @@ public class UserService {
         user.setId(reqUser.getId());
         user.setAccount(reqUser.getAccount());
         // パスワードの変換処理？
-        if(!reqUser.getPassword().isBlank()) {
+        if (!reqUser.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(reqUser.getPassword()));
         } else {
             user.setPassword(editUser(reqUser.getId()).getPassword());

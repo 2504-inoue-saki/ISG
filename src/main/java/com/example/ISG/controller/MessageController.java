@@ -27,11 +27,6 @@ public class MessageController {
     @Autowired
     HttpSession session;
 
-    // エラーメッセージ
-    private static final String E0001 = "アカウントを入力してください";
-    private static final String E0002 = "パスワードを入力してください";
-    private static final String E0003 = "ログインに失敗しました";
-
     /*
      * 新規投稿画面表示（鈴木）
      */
