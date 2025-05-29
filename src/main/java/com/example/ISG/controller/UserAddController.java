@@ -45,49 +45,46 @@ public class UserAddController {
     public ModelAndView userAddProcessContent(@Valid @ModelAttribute("addUser") UserForm addUser, BindingResult result) {
         ModelAndView mav = new ModelAndView();
 
-//        //リクエストパラメータの入力＆文字数チェック＆半角文字チェック
-//        if(result.hasErrors()){
+        //リクエストパラメータの入力＆文字数チェック＆半角文字チェック
+        if(result.hasErrors()){
+            //エラーメッセージを入れる用のリストを作っておく
+            List<String> errorMessages = new ArrayList<String>();
+            //result.getFieldErrors()はresultの持つ全エラーを要素にしたリスト→型はList<FieldError>
+            //要素を1つ取り出してerrorに代入して処理→全ての要素が尽きるまで繰り返す
+            for(FieldError error : result.getFieldErrors()){
+                //error.getDefaultMessage()で取得したエラーメッセージをリストに追加
+                errorMessages.add(error.getDefaultMessage());
+            }
+            //エラーメッセージが詰まったリストをviewに送る
+            mav.addObject("errorMessages", errorMessages);
+            // 画面遷移先を指定
+            mav.setViewName("/userAdd");
+            return mav;
+        }
+
+        //重複チェック
+
+        //妥当性チェック①パスワードとパスワード（確認用）が一致しない場合
+        if (!addUser.getPassword().equals(addUser.getCheckPassword())) { // equals() を使う
+            List<String> errorMessages = new ArrayList<>();
+            errorMessages.add(E0018); // "パスワードとパスワード（確認用）が一致しません"
+            mav.addObject("errorMessages", errorMessages);
+            mav.setViewName("/userAdd");
+            return mav;
+        }
+
+        //妥当性チェック②支社と部署の組み合わせが不正の場合
+//        if (addUser.getPassword() != addUser.getCheckPassword()){
 //            //エラーメッセージを入れる用のリストを作っておく
 //            List<String> errorMessages = new ArrayList<String>();
-//            //result.getFieldErrors()はresultの持つ全エラーを要素にしたリスト→型はList<FieldError>
-//            //要素を1つ取り出してerrorに代入して処理→全ての要素が尽きるまで繰り返す
-//            for(FieldError error : result.getFieldErrors()){
-//                //error.getDefaultMessage()で取得したエラーメッセージをリストに追加
-//                errorMessages.add(error.getDefaultMessage());
-//            }
+//            errorMessages.add(E0018);
+//
 //            //エラーメッセージが詰まったリストをviewに送る
 //            mav.addObject("errorMessages", errorMessages);
 //            // 画面遷移先を指定
 //            mav.setViewName("/userAdd");
 //            return mav;
 //        }
-
-        //重複チェック
-
-        //妥当性チェック①パスワードとパスワード（確認用）が一致しない場合
-        if (addUser.getPassword() != addUser.getCheckPassword()){
-            //エラーメッセージを入れる用のリストを作っておく
-            List<String> errorMessages = new ArrayList<String>();
-            errorMessages.add(E0018);
-            //エラーメッセージが詰まったリストをviewに送る
-            mav.addObject("errorMessages", errorMessages);
-            // 画面遷移先を指定
-            mav.setViewName("/userAdd");
-            return mav;
-        }
-
-        //妥当性チェック②支社と部署の組み合わせが不正の場合
-        if (addUser.getPassword() != addUser.getCheckPassword()){
-            //エラーメッセージを入れる用のリストを作っておく
-            List<String> errorMessages = new ArrayList<String>();
-            errorMessages.add(E0018);
-
-            //エラーメッセージが詰まったリストをviewに送る
-            mav.addObject("errorMessages", errorMessages);
-            // 画面遷移先を指定
-            mav.setViewName("/userAdd");
-            return mav;
-        }
 
         //今の時間をセット
         LocalDateTime now = LocalDateTime.now();
