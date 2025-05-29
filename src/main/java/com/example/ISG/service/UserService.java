@@ -134,7 +134,7 @@ public class UserService {
             user.setName((String) objects[2]);
             user.setBranchId((int) objects[3]);
             user.setDepartmentId((int) objects[4]);
-            user.setIsStopped((short) objects[5]);
+            user.setIsStopped(((Integer) objects[5]).shortValue());
             user.setBranchName((String) objects[6]);
             user.setDepartmentName((String) objects[7]);
             users.add(user);
