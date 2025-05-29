@@ -12,4 +12,6 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<Message, Integer> {
     @Query
     public List<Message> findByCreatedDateBetweenAndCategoryOrderByCreatedDateDesc(LocalDateTime start, LocalDateTime end, String category);
+    public List<Message> findByCreatedDateBetweenOrderByCreatedDateDesc(LocalDateTime start, LocalDateTime end);
+
 }

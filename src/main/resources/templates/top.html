@@ -48,19 +48,20 @@
     <div class="form-area">
         <div class="message-icon" th:each="message : ${contents}">
             <div class="message">
-                <div class="account-name">
-                    <span class="account" th:text="${message.name}">ユーザー名</span>
-                    <span class="name" th:text="'@' + ${message.account}">@account</span>
+                <div class="account-name" th:if="${userMap[message.userId] != null}">
+                    <span class="account" th:text="${userMap[message.userId].name}">ユーザー名</span>
+                    <span class="name" th:text="${userMap[message.userId].account}">@account</span>
                 </div>
-                <label for="MessageCategory">カテゴリー:</label><span class="text" id="MessageCategory" th:text="${message.category}"></span>
+                <label for="MessageCategory">カテゴリー:</label>
+                <span class="text" id="MessageCategory" th:text="${message.category}" style="color:blue"></span>
                 <div class="text" th:text="${message.text}">投稿内容</div>
                 <div class="date" th:text="${#temporals.format(message.createdDate, 'yyyy/MM/dd HH:mm')}">2024/01/01 12:00</div>
                 <!--                    コメント機能-->
                 <div class="comment-contents">
-                    <form method="/comment" action="post">
+                    <form method="post" th:action="@{/comment}" th:object="${commentForm}">
                         <div class="form-area">
                             <label>返信内容</label>
-                            <textarea class="tweet-box" name="commentText" maxlength="200"></textarea><br/>
+                            <textarea class="tweet-box" name="text" maxlength="200" th:field="*{text}"></textarea><br/>
 <!--                            メッセージのIDをコメントfoamのメッセージIDに格納してます-->
                             <input type="hidden" th:value="${message.id}" name="messageId"/>
                             <input type="submit" value="送信"/>

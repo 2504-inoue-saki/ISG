@@ -105,4 +105,11 @@ public class UserService {
             return null;
         }
     }
+
+    /*
+     * ユーザー情報全件取得
+     */
+    public List<UserForm> findAll(){
+         return setUserForm(userRepository.findAll());
+    }
 }

@@ -69,8 +69,12 @@ public class MessageService {
 
 
         //ennity型
-        List<Message> results = messageRepository.findByCreatedDateBetweenAndCategoryOrderByCreatedDateDesc(startDay, endDay,category);
-//        これはEntityはデータアクセス時の入れ物、FormはViewへの入出力時に使用する入れ物と役割を分けているためです
+        List<Message> results;
+        if(StringUtils.isBlank(category)){
+            results = messageRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(startDay, endDay);
+        }else {
+            results = messageRepository.findByCreatedDateBetweenAndCategoryOrderByCreatedDateDesc(startDay, endDay,category);
+        }
         List<MessageForm> Messages = setMessageForm(results);
         return Messages;
     }

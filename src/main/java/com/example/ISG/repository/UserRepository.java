@@ -1,5 +1,6 @@
 package com.example.ISG.repository;
 
+import com.example.ISG.controller.form.UserForm;
 import com.example.ISG.repository.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,7 +24,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT u.id, u.account, u.name, u.branchId, u.departmentId, u.isStopped, b.name, d.name FROM User u " +
             "INNER JOIN Branch b ON u.branchId = b.id " +
             "INNER JOIN Department d ON u.departmentId = d.id")
-    public List<Object[]> findAllUser();
+    public List<UserForm> findAllUser();
 
     // ユーザ停止状態（＝ステータス）の変更処理
     @Modifying

@@ -3,6 +3,7 @@ package com.example.ISG.controller;
 import com.example.ISG.controller.form.*;
 import com.example.ISG.repository.entity.Comment;
 import com.example.ISG.repository.entity.Message;
+import com.example.ISG.repository.entity.User;
 import com.example.ISG.service.CommentService;
 import com.example.ISG.service.MessageService;
 import com.example.ISG.service.UserService;
@@ -21,7 +22,9 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.text.ParseException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class TopController {
@@ -45,6 +48,8 @@ public class TopController {
         // 投稿を全件取得した値を入れる箱（contentData）をつくってサービスに渡しています
         List<MessageForm> contentData = messageService.findAllMessage(start,end,category);
         List<CommentForm> commentData = commentService.findAllComment();
+        List<UserForm>userList = userService.findAll();
+        Map<Integer,UserForm> userMap = setUser(userList);
 
         Object loginUser = session.getAttribute("loginUser");
         if(loginUser != null){
@@ -58,14 +63,12 @@ public class TopController {
         }
         // 画面遷移先を指定 「現在のURL」/top へ画面遷移することを指定します。
         mav.setViewName("/top");
-        // 投稿データオブジェクトを先ほどのcontentDataをModelAndView型の変数mavへ格納します。
+        mav.addObject("userMap", userMap);
         mav.addObject("contents", contentData);
         mav.addObject("comments", commentData);
         mav.addObject("commentForm", new CommentForm());
         mav.addObject("start",start);
         mav.addObject("end", end);
-
-
         /* 変数mavを戻り値として返します。 */
         return mav;
     }
@@ -114,7 +117,7 @@ public class TopController {
      *コメント投稿
      */
     @PostMapping("/comment")
-    public ModelAndView addComment(@Validated @ModelAttribute("commentForm") CommentForm commentForm, BindingResult result , MessageForm message
+    public ModelAndView addComment(@Validated @ModelAttribute("commentForm") CommentForm commentForm, BindingResult result
     ) throws ParseException {
         //formにエラーがあれば条件分岐
         if (result.hasErrors()) {
@@ -122,7 +125,10 @@ public class TopController {
             //エラーの入ったfoamを引数なしでおくる（topに似た処理）
             List<MessageForm> contentData = messageService.findAllMessage(null, null, null);
             List<CommentForm> commentData = commentService.findAllComment();
+            List<UserForm>userList = userService.findAll();
+            Map<Integer,UserForm> userMap = setUser(userList);
 
+            mav.addObject("userMap", userMap);
             mav.addObject("contents", contentData);
             mav.addObject("comments", commentData);
             // エラーがある form を渡す（コメントフォーム）
@@ -145,5 +151,17 @@ public class TopController {
         commentService.deleteComment(id);
         // rootへリダイレクト
         return new ModelAndView("redirect:/");
+    }
+
+    /*
+     *ユーザー情報のセット
+     */
+    private Map<Integer,UserForm> setUser(List<UserForm> users){
+        Map<Integer,UserForm> map = new HashMap<>();
+        for (UserForm user :users){
+            //           (1,ユーザーfoam）みたいになる
+            map.put(user.getId(), user);
+        }
+        return map;
     }
 }
