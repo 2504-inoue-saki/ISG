@@ -51,12 +51,12 @@
     <div class="form-area">
         <div class="message-icon" th:each="message : ${contents}">
             <div class="message">
-                <div class="account-name">
+                <div class="account-name" th:object="${contents}">
                     <span class="account" th:text="${message.name}">ユーザ名</span>
                     <span class="name" th:text="'@' + ${message.account}">@account</span>
                 </div>
                 <label for="MessageCategory">カテゴリー:</label><span class="text" id="MessageCategory" th:text="${message.category}"></span>
-                <div class="text" th:text="${message.text}">投稿内容</div>
+                <div class="text" th:field="*{text}">投稿内容</div>
                 <div class="date" th:text="${#temporals.format(message.createdDate, 'yyyy/MM/dd HH:mm')}">2024/01/01 12:00</div>
                 <!--                    コメント機能-->
                 <div class="comment-contents">
