@@ -25,6 +25,15 @@
         <button class="new-button" type="button">ユーザー編集</button>
     </a>
 </div>
+<!--    エラー表示-->
+<div th:object="${commentForm}">
+    <div class="message-icon" th:if="${#fields.hasErrors('text')}" >
+        <p th:errors="*{text}" style="color:red"></p>
+    </div>
+    <ul>
+        <li th:each="message : ${errorMessages}" th:text="${message}" style="color:red">eroor</li>
+    </ul>
+</div>
 <div class="main-contents">
         <div class="form-area">
             <form action="./" method="get">
@@ -35,18 +44,6 @@
                 <input type="submit" value="絞込">
             </form>
         </div>
-
-<!--    エラー表示-->
-    <div th:object="${commentForm}">
-        <div class="message-icon" th:if="${#fields.hasErrors('text')}" >
-            <p th:errors="*{text}" style="color:red"></p>
-        </div>
-<!--        <div th:if="${errorMessages != null}">-->
-            <ul>
-                <li th:each="message : ${errorMessages}" th:text="${message}" style="color:red">eroor</li>
-            </ul>
-<!--        </div>-->
-    </div>
 
     <div class="form-area">
         <div class="message-icon" th:each="message : ${contents}">
