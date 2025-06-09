@@ -22,7 +22,16 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     boolean existsByAccountAndIdNot(String account, int id);
 
     // ユーザを全件取得
-    @Query("SELECT u.id, u.account, u.name, u.branchId, u.departmentId, u.isStopped, b.name, d.name FROM User u " +
+    @Query("SELECT " +
+            "u.id as id, " +
+            "u.account as account, " +
+            "u.name as name, " +
+            "u.branchId, " +
+            "u.departmentId, " +
+            "u.isStopped as isStopped, " +
+            "b.name, " +
+            "d.name " +
+            "FROM User u " +
             "INNER JOIN Branch b ON u.branchId = b.id " +
             "INNER JOIN Department d ON u.departmentId = d.id")
     public List<Object[]> findAllUser();
